@@ -90,32 +90,19 @@
   
       </a>
     </section>
-  </main>  <div class="lightbox" id="lightbox" role="dialog" aria-hidden="true">
-    <button class="close-btn" id="closeBtn">✕</button>
-    <div class="inner"><img id="lightboxImg" alt="Poster preview"></div>
-  </div>  <script>
+  </main>  <script>
     document.querySelectorAll('.card').forEach(card => {
       card.addEventListener('click', e => {
         e.preventDefault();
         const full = card.getAttribute('data-full');
-        const lb = document.getElementById('lightbox');
-        const img = document.getElementById('lightboxImg');
+    
         img.src = full;
         lb.classList.add('open');
         lb.setAttribute('aria-hidden', 'false');
       })
     })
 
-    document.getElementById('closeBtn').addEventListener('click', ()=>{
-      const lb = document.getElementById('lightbox');
-      lb.classList.remove('open');
-      lb.setAttribute('aria-hidden', 'true');
-      document.getElementById('lightboxImg').src = '';
-    })
-    document.getElementById('lightbox').addEventListener('click', (e)=>{
-      if(e.target === e.currentTarget) document.getElementById('closeBtn').click();
-    })
-    document.addEventListener('keydown', e=>{ if(e.key === 'Escape') document.getElementById('closeBtn').click(); });
+    
   </script>
   <!DOCTYPE html>
 <html lang="en">
