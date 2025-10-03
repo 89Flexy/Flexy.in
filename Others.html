@@ -95,35 +95,7 @@
               </a>
  <a class="card" href="#" data-full="https://via.placeholder.com/800x1200.png?text=Poster+1">
         <div class="poster"><img src="https://i.ibb.co/vRtfnXC/MV5-BZm-Qy-Yz-Jm-ODEt-ZDI5-ZC00-NTk3-LWEz-NGQt-Yj-Vh-Zj-M4-MWE0-Mz-U1-Xk-Ey-Xk-Fqc-Gc-V1.jpg" loading="lazy" alt="Poster 1"></div>
-      </a>
-    </section>
-  </main>  <div class="lightbox" id="lightbox" role="dialog" aria-hidden="true">
-    <button class="close-btn" id="closeBtn">✕</button>
-    <div class="inner"><img id="lightboxImg" alt="Poster preview"></div>
-  </div>  <script>
-    document.querySelectorAll('.card').forEach(card => {
-      card.addEventListener('click', e => {
-        e.preventDefault();
-        const full = card.getAttribute('data-full');
-        const lb = document.getElementById('lightbox');
-        const img = document.getElementById('lightboxImg');
-        img.src = full;
-        lb.classList.add('open');
-        lb.setAttribute('aria-hidden', 'false');
-      })
-    })
-
-    document.getElementById('closeBtn').addEventListener('click', ()=>{
-      const lb = document.getElementById('lightbox');
-      lb.classList.remove('open');
-      lb.setAttribute('aria-hidden', 'true');
-      document.getElementById('lightboxImg').src = '';
-    })
-    document.getElementById('lightbox').addEventListener('click', (e)=>{
-      if(e.target === e.currentTarget) document.getElementById('closeBtn').click();
-    })
-    document.addEventListener('keydown', e=>{ if(e.key === 'Escape') document.getElementById('closeBtn').click(); });
-  </script>
+ </a>
   <!DOCTYPE html>
 <html lang="en">
 <head>
