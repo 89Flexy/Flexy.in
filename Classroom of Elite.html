@@ -384,24 +384,7 @@ links.forEach(link=>{
   });
 });
 </script>
-    const links = document.querySelectorAll('.bottom-nav a');
-
-    function setActive(tab){
-      links.forEach(link=>{
-        if(link.dataset.tab===tab){
-          link.classList.add('active');
-        }else{
-          link.classList.remove('active');
-        }
-      });
-    }
-
-    links.forEach(link=>{
-      link.addEventListener('click',e=>{
-        e.preventDefault();
-        setActive(link.dataset.tab);
-      });
-    });
+    
   </script>
 </body>
 </html>
