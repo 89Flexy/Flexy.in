@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Poster Bottom Center</title>
+<style>
+body {
+  margin: 0;
+  background-color: #000;
+  font-family: Arial, sans-serif;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Header */
+.header-container {
+  position: relative;
+  width: 100%;
+  max-width: 1200px;
+  height: 450px;
+}
+.header-container img.header-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.header-container::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.8);
+  z-index: 1;
+}
+.header-container img.logo {
+  position: absolute;
+  top: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 300px;
+  height: auto;
+  z-index: 10;
+}
+.poster-wrapper {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  z-index: 10;
+  max-width: 80%;
+}
+.poster-wrapper img.poster {
+  width: 150px;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(255,255,255,0.5);
+  display: block;
+  margin: 0 auto 10px auto;
+}
+.poster-wrapper h1 { margin:0; font-size:18px; color:#fff; }
+.poster-wrapper p { margin:5px 0 10px 0; font-size:13px; color:#ccc; }
+
+/* Content Section */
+.content-section {
+  width: 89%;
+  max-width: 1000px;
+  background: #111;
+  margin: 15px auto 0 auto;
+  padding: 25px 20px;
+  border-radius: 10px;
+  text-align: center;
+}
+.content-section h3 { font-size:20px; color:#fff; margin-bottom:12px; text-transform:uppercase; letter-spacing:1px; }
+.content-section .overview { color:#bbb; font-size:15px; line-height:1.5; margin-bottom:15px; }
+.extra-info { color:#ccc; font-size:14px; margin:5px 0; font-weight: normal; }
+
+/* Season Block */
+.season-block {
+  width: 89%;
+  max-width: 1000px;
+  background:#111;
+  margin:0 auto 30px auto;
+  padding:20px;
+  border-radius:10px;
+  text-align:left;
+  position: relative;
+  z-index:5;
+}
+.season-selector { margin-bottom:10px; }
+.season-selector button {
+  background:#222; color:#fff; border:1px solid #444;
+  padding:10px 15px; border-radius:6px; cursor:pointer; font-size:14px;
+}
+.season-selector button:hover { background:#333; }
+.season-menu {
+  display:none;
+  position:absolute;
+  background:#111; border:1px solid #333; border-radius:6px;
+  list-style:none; padding:0; margin:5px 0 0 0; width:150px; z-index:10;
+}
+.season-menu li {
+  padding:8px 12px; cursor:pointer; color:#ccc;
+}
+.season-menu li:hover { background:#222; color:#fff; }
+
+/* Season Content / Episodes */
+.season-content h4 { margin:0 0 10px 0; color:#fff; }
+.episode-grid {
+  display:grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap:8px;
+  width:100%;
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+.episode-box { background:#111; border-radius:6px; overflow:hidden; text-align:center; cursor:pointer; padding:0; transition:transform 0.2s; }
+.episode-box:hover { transform:scale(1.05); }
+.episode-box img { width:100%; aspect-ratio:16/9; object-fit:cover; display:block; }
+.episode-box p { margin:3px 0; font-size:12px; color:#ccc; }
+</style>
+
+
+<!-- Top PNG Logo -->
+<div style="width:100%; max-width:1200px; margin:5px auto; text-align:center;">
+  <img src="https://i.ibb.co/fb8XSgT/20250927-110032.png" alt="Logo" style="width:150px; height:auto;">
+</div>
+
+<!-- Simple Video Player -->
+<div class="video-section">
+  <h3>A Couple of Cuckoos</h3>
+  <p>1X5</p>
+  <div class="video-wrapper" style="padding-top:56.25%; position:relative;">
+    <iframe src="https://play.zephyrflick.top/video/5ff37811dd20fbf31dc7b9abf72a9754" 
+            style="position:absolute; top:0; left:0; width:100%; height:100%; border:none;" 
+            allowfullscreen>
+    </iframe>
+  </div>
+</div>
+
+<style>
+.video-section {
+  width: 89%;
+  max-width: 1000px;
+  margin: 20px auto;
+  padding: 20px;
+  background: #111;
+  border-radius: 10px;
+  text-align: center;
+}
+.video-section h3 {
+  font-size: 20px;
+  color: #fff;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+/* 16:9 aspect ratio */
+.video-wrapper {
+  position: relative;
+  width: 100%;
+  padding-top: 56.25%;
+  background: #000;
+  border-radius: 10px;
+  overflow: hidden;
+}
+.video-wrapper video {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  object-fit: cover;
+}
+/* Quality Buttons */
+.quality-controls {
+  margin-top: 12px;
+}
+.quality-controls button {
+  background: #222;
+  color: #fff;
+  border: 1px solid #444;
+  margin: 0 5px;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+}
+.quality-controls button:hover {
+  background: #333;
+}
+</style>
+
+<script>
+function setQuality(q) {
+  const video = document.getElementById('myVideo');
+  const sources = video.querySelectorAll('source');
+  let currentTime = video.currentTime;
+  let isPaused = video.paused;
+
+  sources.forEach(src => {
+    if (src.dataset.quality === q) {
+      video.src = src.src;
+    }
+  });
+
+  video.load();
+  video.currentTime = currentTime; // resume from same spot
+  if (!isPaused) video.play();
+}
+</script>
+  <div class="content">
+    
+  </div>
+
+
+<div class="season-block">
+  <div class="season-selector">
+    <button onclick="toggleSeasonMenu()">Season</button>
+    <ul id="seasonMenu" class="season-menu">
+      <li onclick="changeSeason(1)">Season 1</li>
+      <li onclick="changeSeason(2)">Season 2</li>
+    </ul>
+  </div>
+
+  <div id="season-content" class="season-content">
+    <!-- Default Season 1 Episodes -->
+    <h4>Season 1 Episodes</h4>
+    <div class="episode-grid" id="episode-grid">
+      <!-- JS will populate episodes -->
+    </div>
+  </div>
+</div>
+
+<script>
+// Dropdown toggle
+function toggleSeasonMenu() {
+  const menu = document.getElementById("seasonMenu");
+  menu.style.display = menu.style.display === "block" ? "none" : "block";
+}
+
+// Change Season
+const episodes = {
+  1: [
+{img:"https://i.ibb.co/prRNWz3q/images-12.jpg", title:"1X1", url:"A Couple of Cuckoos 1X1.html"},
+    {img:"https://i.ibb.co/N6rYTjhz/f1e4456320a8463439d8e25356057cb0aad14931a75fe46dd8ad7152142e83ef-SX1080-FMjpg.jpg", title:"1X2",url:"A Couple of Cuckoos 1X2.html"},
+    {img:"https://i.ibb.co/CKFnLWrj/MV5-BZm-Vl-MDRm-N2-Ut-Zjdk-My00-Mm-Ex-LWI3-Mm-Ut-ZTAz-Mjhh-Zj-M3-Yj-Az-Xk-Ey-Xk-Fqc-Gc-V1.jpg", title:"1X3",url:"A Couple of Cuckoos 1X3.html"},
+    {img:"https://i.ibb.co/8gvFCjDM/images-13.jpg", title:"1X4",url:"A Couple of Cuckoos 1X4.html"},
+     {img:"https://i.ibb.co/dsS5mSHQ/images-14.jpg", title:"1X5",url:"A Couple of Cuckoos 1X5.html"},
+         {img:"https://i.ibb.co/wFJKYsFk/19e1b9b20c0092f9c9fd4b1551eaaf76.jpg", title:"1X6",url:"A Couple of Cuckoos 1X6.html"},
+    {img:"https://i.ibb.co/ksHvv8PF/MV5-BYWY3-Mj-Q3-OTEt-Mm-Ew-Yi00-NTYx-LWE4-ZWQt-ZWE5-YWY1-OTE4-MDZl-Xk-Ey-Xk-Fqc-Gc-V1-FMjpg-UX1000.jpg", title:"1X7",url:"A Couple of Cuckoos 1X7.html"},
+    {img:"https://i.ibb.co/M556G1VV/images-15.jpg", title:"1X8",url:"A Couple of Cuckoos 1X8.html"},
+    {img:"https://i.ibb.co/PBWsSK9/images-16.jpg", title:"1X9",url:"A Couple of Cuckoos 1X9.html"},
+     {img:"https://i.ibb.co/wr8VQPBh/images-17.jpg", title:"1X10",url:"A Couple of Cuckoos 1X10.html"},
+      {img:"https://i.ibb.co/pvkVQR0F/images-18.jpg", title:"1X11",url:"A Couple of Cuckoos 1X11.html"},
+    {img:"https://i.ibb.co/YvJL7pb/images-19.jpg", title:"1X12",url:"A Couple of Cuckoos 1X12.html"},
+    {img:"https://i.ibb.co/nN2Gcbz7/images-20.jpg", title:"1X13",url:"A Couple of Cuckoos 1X13.html"},
+    {img:"https://i.ibb.co/bRmy4vVS/images-21.jpg", title:"1X14",url:"A Couple of Cuckoos 1X14.html"},
+     {img:"https://i.ibb.co/SXVGxnt7/images-23.jpg", title:"1X15",url:"A Couple of Cuckoos 1X15.html"},
+         {img:"https://i.ibb.co/zVQGzrRT/images-25.jpg", title:"1X16",url:"A Couple of Cuckoos 1X16.html"},
+    {img:"https://i.ibb.co/B2cNF6qB/3810cf46a0de359007affc4646ea7d64.jpg", title:"1X17",url:"A Couple of Cuckoos 1X17.html"},
+    {img:"https://i.ibb.co/PGhjpWyL/7863f37706fb9d52fe450b6a1e9c9bc7.jpg", title:"1X18",url:"A Couple of Cuckoos 1X18.html"},
+    {img:"https://i.ibb.co/1fCT9DSF/images-24.jpg", title:"1X19",url:"A Couple of Cuckoos 1X19.html"},
+         {img:"https://i.ibb.co/VpPb4NmV/489c35d21dcdb9384c21eed90b421f70.jpg", title:"1X20",url:"A Couple of Cuckoos 1X20.html"},
+         {img:"https://i.ibb.co/3ysGmJzw/images-26.jpg", title:"1X21",url:"A Couple of Cuckoos 1X21.html"},
+    {img:"https://i.ibb.co/fdLsRc3J/36848504a20632790cc8c507249b53ad.jpg", title:"1X22",url:"A Couple of Cuckoos 1X22.html"},
+    {img:"https://i.ibb.co/s95RbhPN/a0a26155b2be987c1aa469ff6143a731.jpg", title:"1X23",url:"A Couple of Cuckoos 1X23.html"},
+    {img:"https://i.ibb.co/pvrySgkz/images-27.jpg", title:"1X24",url:"A Couple of Cuckoos 1X24.html"},
+  ],
+  2: [
+    {img:"https://i.ibb.co/pvkVQR0F/images-18.jpg", title:"2X1",url:""},
+    {img:"https://i.ibb.co/M556G1VV/images-15.jpg", title:"2X2",url:""},
+  ]
+};
+
+function changeSeason(season) {
+  document.getElementById("seasonMenu").style.display = "none";
+  const grid = document.getElementById("episode-grid");
+  grid.innerHTML = "";
+  episodes[season].forEach(ep=>{
+    const div = document.createElement("div");
+    div.className = "episode-box";
+    div.innerHTML = `
+      <a href="${ep.url || '#'}">
+        <img src="${ep.img}" alt="${ep.title}">
+        <p>${ep.title}</p>
+      </a>
+    `;
+    grid.appendChild(div);
+  });
+  document.querySelector("#season-content h4").textContent = `Season ${season} Episodes`;
+}
+  
+// Default load season 1
+changeSeason(1);
+</script>
+<!-- DMCA Notice and Copyright with PNG -->
+<div class="footer-notice">
+ 
+    <img src="https://i.ibb.co/VphghSzx/20250927-101207.png" alt="Logo" class="footer-logo">
+    <a href="//www.dmca.com/Protection/Status.aspx?ID=ee79a2cd-30ed-4cb8-b32f-b54216bba440" title="DMCA.com Protection Status" class="dmca-badge"> <img src ="https://images.dmca.com/Badges/dmca-badge-w100-5x1-07.png?ID=ee79a2cd-30ed-4cb8-b32f-b54216bba440"  alt="DMCA.com Protection Status" /></a>  <script src="https://images.dmca.com/Badges/DMCABadgeHelper.min.js"> </script>
+
+</div>
+<div>© All rights reserved by 89 Flexy.</div>
+
+<style>
+.footer-notice {
+  width: 79%;
+  max-width: 1000px;
+  margin: 20px auto 40px auto;
+  padding: 15px 20px;
+  background: #111;
+  border-radius: 10px;
+  text-align: center;
+  color: #ccc;
+  font-size: 14px;
+  line-height: 1.5;
+  border: 1px solid #333;
+}
+.footer-notice p {
+  margin: 10px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px; /* space between logo and text */
+}
+.footer-logo {
+  width: 280px; /* adjust size as needed */
+  height: auto;
+}
+
+</style>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>OTT + Anime UI</title>
+  <style>
+    :root{
+      --bg:#000;
+      --nav-bg:#111;
+      --muted:#aaa;
+      --active:#00e0ff; /* light blue */
+    }
+
+    body{
+      margin:0;
+      padding-bottom:40px;  /* nav ke liye space */
+      background:var(--bg);
+      color:#fff;
+      font-family:Arial, sans-serif;
+    }
+
+    .content{
+      padding:24px;
+    }
+
+    /* Bottom nav */
+    .bottom-nav{
+      position:fixed;
+      left:0;
+      right:0;
+      bottom:0;
+      height:40px; /* slim height */
+      background:linear-gradient(180deg,var(--nav-bg),#0f0f0f);
+      display:flex;
+      justify-content:space-around;
+      align-items:center;
+      border-top:1px solid #222;
+      z-index:1000;
+    }
+
+    .bottom-nav a{
+      flex:1;
+      max-width:110px;
+      text-align:center;
+      color:var(--muted);
+      text-decoration:none;
+      font-size:10px; /* small text */
+      transition:color .18s ease, transform .12s ease;
+      position:relative;
+      cursor:pointer;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      line-height:1;
+    }
+
+    .bottom-nav a svg{
+      width:14px;   /* small icon */
+      height:14px;
+      stroke:white; /* default white icons */
+      margin-bottom:2px;
+    }
+
+    .bottom-nav a.active{
+      color:var(--active);
+    }
+
+    .bottom-nav a.active svg{
+      stroke:var(--active); /* active icon light blue */
+    }
+  </style>
+</head>
+<body>
+  <div class="content">
+    
+  </div>
+
+<!-- Bottom Navigation -->
+<nav class="bottom-nav">
+  <a href="https://89flexy.github.io/Flexy.in/" data-tab="home" class="active">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M3 9.75L12 3l9 6.75V21a.75.75 0 01-.75.75H3.75A.75.75 0 013 21V9.75z"/>
+    </svg>
+    Home
+  </a>
+  <a href="Movies.html" data-tab="movies">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M4 4h16v16H4V4zm4 0v16M16 4v16"/>
+    </svg>
+    Movies
+  </a>
+  <a href="Series.html" data-tab="series">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M12 3l9 6-9 6-9-6 9-6zM3 15l9 6 9-6"/>
+    </svg>
+    Series
+  </a>
+  <a href="Others.html" data-tab="anime">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M12 3c4.5 0 9 1.5 9 6s-4.5 9-9 9-9-4.5-9-9 4.5-6 9-6z"/>
+      <path stroke-linecap="round" stroke-linejoin="round" d="M9 10h.01M15 10h.01M9 15c1.5 1 4.5 1 6 0"/>
+    </svg>
+    Other
+  </a>
+</nav>
+
+<script>
+const links = document.querySelectorAll('.bottom-nav a');
+
+function setActive(tab){
+  links.forEach(link=>{
+    if(link.dataset.tab === tab){
+      link.classList.add('active');
+    }else{
+      link.classList.remove('active');
+    }
+  });
+}
+
+links.forEach(link=>{
+  link.addEventListener('click', e=>{
+    // Only prevent default if href="#"
+    if(link.getAttribute('href') === "#"){
+      e.preventDefault();
+      setActive(link.dataset.tab);
+    }
+  });
+});
+</script>
+</body>
+</html>
