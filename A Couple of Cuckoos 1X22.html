@@ -301,48 +301,98 @@ function changeSeason(season) {
 // Default load season 1
 changeSeason(1);
 </script>
-<!-- DMCA Notice and Copyright with PNG -->
+  <!-- DMCA Notice and Copyright with PNG -->
 <div class="footer-notice">
- 
     <img src="https://i.ibb.co/VphghSzx/20250927-101207.png" alt="Logo" class="footer-logo">
-    <a href="//www.dmca.com/Protection/Status.aspx?ID=ee79a2cd-30ed-4cb8-b32f-b54216bba440" title="DMCA.com Protection Status" class="dmca-badge"> <img src ="https://images.dmca.com/Badges/dmca-badge-w100-5x1-07.png?ID=ee79a2cd-30ed-4cb8-b32f-b54216bba440"  alt="DMCA.com Protection Status" /></a>  <script src="https://images.dmca.com/Badges/DMCABadgeHelper.min.js"> </script>
 
+    <a href="//www.dmca.com/Protection/Status.aspx?ID=ee79a2cd-30ed-4cb8-b32f-b54216bba440" 
+       title="DMCA.com Protection Status" class="dmca-badge">
+       <img src="https://images.dmca.com/Badges/dmca-badge-w100-5x1-07.png?ID=ee79a2cd-30ed-4cb8-b32f-b54216bba440" 
+            alt="DMCA.com Protection Status" />
+    </a>
+    <script src="https://images.dmca.com/Badges/DMCABadgeHelper.min.js"></script>
+
+    <div class="copyright">© All rights reserved by 89 Flexy.</div>
+    
+    <a href="https://www.instagram.com/abhijeet_dhum_89?igsh=M3JkNXIweGdiZTBu" target="_blank" class="instagram-suggest">
+  <span>CLICK ON ME
+      SUGGEST HERE- ANIME OR MOVIES TO ADD IN WEBSITE</span>
+</a>
 </div>
-<div>© All rights reserved by 89 Flexy.</div>
+</div>
 
 <style>
+.instagram-suggest {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px; /* space between logo and text */
+  padding: 10px 15px;
+  background-color: #505050; /* Instagram pink */
+  color: #fff;
+  font-weight: bold;
+  font-size: 16px;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.instagram-suggest img {
+  width: 24px;
+  height: 24px;
+}
+
+.instagram-suggest:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+/* Responsive: shrink text on small screens */
+@media (max-width: 600px) {
+  .instagram-suggest {
+    font-size: 14px;
+    padding: 8px 12px;
+  }
+
+  .instagram-suggest img {
+    width: 20px;
+    height: 20px;
+  }
+}
 .footer-notice {
-  width: 79%;
+  width: 90%;
   max-width: 1000px;
   margin: 20px auto 40px auto;
-  padding: 15px 20px;
-  background: #111;
+  padding: 20px;
   border-radius: 10px;
   text-align: center;
   color: #ccc;
   font-size: 14px;
   line-height: 1.5;
-  border: 1px solid #333;
-}
-.footer-notice p {
-  margin: 10px 0;
+
   display: flex;
+  flex-direction: column; /* stack items vertically */
   justify-content: center;
   align-items: center;
-  gap: 8px; /* space between logo and text */
+  gap: 15px; /* space between logo, badge, and text */
 }
+
 .footer-logo {
-  width: 280px; /* adjust size as needed */
+  width: 280px;
+  max-width: 100%;
   height: auto;
 }
 
+.dmca-badge img {
+  width: 160px; /* adjust size */
+  max-width: 100%;
+  height: auto;
+}
+
+.footer-notice .copyright {
+  font-size: 13px;
+  color: #aaa;
+}
 </style>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>OTT + Anime UI</title>
   <style>
     :root{
       --bg:#000;
@@ -416,7 +466,7 @@ changeSeason(1);
     
   </div>
 
-<!-- Bottom Navigation -->
+  <!-- Bottom Navigation -->
 <nav class="bottom-nav">
   <a href="https://89flexy.github.io/Flexy.in/" data-tab="home" class="active">
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2">
@@ -436,7 +486,7 @@ changeSeason(1);
     </svg>
     Series
   </a>
-  <a href="Others.html" data-tab="anime">
+  <a href="Other.html" data-tab="anime">
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2">
       <path stroke-linecap="round" stroke-linejoin="round" d="M12 3c4.5 0 9 1.5 9 6s-4.5 9-9 9-9-4.5-9-9 4.5-6 9-6z"/>
       <path stroke-linecap="round" stroke-linejoin="round" d="M9 10h.01M15 10h.01M9 15c1.5 1 4.5 1 6 0"/>
@@ -468,5 +518,9 @@ links.forEach(link=>{
   });
 });
 </script>
+    
+  </script>
 </body>
 </html>
+
+      
