@@ -3,20 +3,27 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Others</title>
+  <title>Others Section</title>
 </head>
 <body>
-  <div id="main"></div>
+  <div id="others-content"></div>
 
   <script>
-    // Load the content of index.html automatically
+    // Load index.html and extract only the "Others" section
     fetch("index.html")
       .then(res => res.text())
       .then(html => {
-        // Get just the body content of index.html
         const parser = new DOMParser();
         const doc = parser.parseFromString(html, "text/html");
-        document.getElementById("main").innerHTML = doc.body.innerHTML;
+        
+        // yahan ID ya class ko use karo jo "Others" section me hai
+        const othersSection = doc.querySelector("#others, .others, section.others");
+        
+        if (othersSection) {
+          document.getElementById("others-content").innerHTML = othersSection.outerHTML;
+        } else {
+          document.getElementById("others-content").innerHTML = "<p>Others section not found!</p>";
+        }
       });
   </script>
 </body>
