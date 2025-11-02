@@ -184,6 +184,75 @@
       </span>
       <button class="btn" onclick="alert('Casting feature coming soon!')">Cast</button>
     </div>
+    <!-- 🔽 Arrow Control (ON / OFF Buttons) -->
+<div class="setting-item" id="arrowSetting">
+  <span>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+      <path d="M12,4L4,12H9V20H15V12H20L12,4Z" />
+    </svg>
+    <span id="arrowLabel">Arrow is OFF</span>
+  </span>
+  <div>
+    <button class="btn" id="turnOn" onclick="turnOnArrow()">Turn ON</button>
+    <button class="btn" id="turnOff" onclick="turnOffArrow()">Turn OFF</button>
+  </div>
+</div>
+<!-- Smooth White Dot Cursor -->
+<style>
+  #touchArrow {
+    position: fixed;
+    width: 24px;                /* Bigger size */
+    height: 24px;
+    background: #fff;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    display: none;
+    box-shadow: 0 0 12px rgba(255, 255, 255, 0.8);
+    transform: translate(-50%, -50%);
+    transition: left 0.08s ease-out, top 0.08s ease-out, transform 0.1s ease;
+  }
+</style>
+
+<div id="touchArrow"></div>
+
+<script>
+  const arrow = document.getElementById("touchArrow");
+  const arrowLabel = document.getElementById("arrowLabel");
+  let arrowEnabled = false;
+
+  function turnOnArrow() {
+    arrowEnabled = true;
+    arrow.style.display = "block";
+    arrowLabel.textContent = "Arrow is ON";
+  }
+
+  function turnOffArrow() {
+    arrowEnabled = false;
+    arrow.style.display = "none";
+    arrowLabel.textContent = "Arrow is OFF";
+  }
+
+  function moveArrow(x, y) {
+    if (arrowEnabled) {
+      arrow.style.left = x + "px";
+      arrow.style.top = y + "px";
+      arrow.style.transform = "translate(-50%, -50%) scale(1.05)";
+      setTimeout(() => {
+        arrow.style.transform = "translate(-50%, -50%) scale(1)";
+      }, 100);
+    }
+  }
+
+  document.addEventListener("mousemove", (e) => {
+    moveArrow(e.clientX, e.clientY);
+  });
+
+  document.addEventListener("touchmove", (e) => {
+    const touch = e.touches[0];
+    moveArrow(touch.clientX, touch.clientY);
+  });
+</script>
    <!-- Share With Friends -->
     <div class="setting-item">
       <span>
