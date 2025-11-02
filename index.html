@@ -568,18 +568,56 @@ ottItems.forEach(item => {
 }
 
 </style>
-<section id="watch-history" style="display:none; padding:20px; color:white;">
-  <h2 style="text-align:center; font-size:1.5em; margin-bottom:10px;">Watch History</h2>
-  <div id="history-list" style="display:flex; flex-wrap:wrap; justify-content:center; gap:15px;"></div>
-  <div style="text-align:center; margin-top:10px;">
+<section id="watch-history" style="display:none; padding:20px;">
+  <h2 style="color:#fff; text-align:center; font-size:1.5em; margin-bottom:20px;">Watch History</h2>
+  <div id="history-list" class="anime-grid"></div>
+  <div style="text-align:center; margin-top:15px;">
     <button id="clear-history"
-      style="background:#111; color:#fff; border:1px solid #333; border-radius:8px; padding:5px 10px; cursor:pointer;">
+      style="background:#111; color:#fff; border:1px solid #333; border-radius:8px; padding:6px 14px; cursor:pointer; font-size:0.9em;">
       Clear
     </button>
   </div>
 </section>
+  <style>.anime-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 15px;
+  justify-items: center;
+}
+
+.history-card {
+  background: #0b0b0d;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.1);
+  transition: transform 0.3s, box-shadow 0.3s;
+  cursor: pointer;
+  width: 150px;
+  text-align: center;
+}
+
+.history-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
+}
+
+.history-card img {
+  width: 100%;
+  height: 210px;
+  object-fit: cover;
+}
+
+.history-card p {
+  color: #fff;
+  font-size: 0.9em;
+  padding: 6px 0 10px 0;
+  margin: 0;
+}
+    <style/>
+    
 <script>
 document.addEventListener("DOMContentLoaded", () => {
+
   function loadHistory() {
     const section = document.getElementById("watch-history");
     const container = document.getElementById("history-list");
@@ -594,23 +632,16 @@ document.addEventListener("DOMContentLoaded", () => {
     container.innerHTML = "";
 
     history.forEach(item => {
-      const div = document.createElement("div");
-      div.style.width = "150px";
-      div.style.background = "#111";
-      div.style.borderRadius = "10px";
-      div.style.overflow = "hidden";
-      div.style.textAlign = "center";
-      div.style.transition = "0.3s";
-      div.style.cursor = "pointer";
-      div.style.boxShadow = "0 0 10px rgba(255,255,255,0.1)";
-      div.innerHTML = `
-        <img src="${item.image}" alt="${item.title}" style="width:100%; height:200px; object-fit:cover;">
-        <p style="margin:8px 0; font-size:0.9em;">${item.title}</p>
+      const card = document.createElement("div");
+      card.className = "history-card";
+      card.innerHTML = `
+        <img src="${item.image}" alt="${item.title}">
+        <p>${item.title}</p>
       `;
-      div.addEventListener("click", () => {
+      card.addEventListener("click", () => {
         if (item.url && item.url !== "#") window.location.href = item.url;
       });
-      container.appendChild(div);
+      container.appendChild(card);
     });
   }
 
@@ -625,18 +656,15 @@ document.addEventListener("DOMContentLoaded", () => {
     loadHistory();
   }
 
-  // Clear history
   document.getElementById("clear-history").addEventListener("click", () => {
     localStorage.removeItem("watchHistory");
     loadHistory();
   });
 
-  // Detect image clicks (inside Anime Arrived section only)
   const animeSection = document.querySelector("#anime-arrived") || document.body;
   animeSection.addEventListener("click", (e) => {
     const img = e.target.closest("img");
     if (!img) return;
-
     const card = img.closest("div");
     const titleEl = card?.querySelector("p");
     const title = titleEl ? titleEl.textContent.trim() : "Untitled";
@@ -644,10 +672,10 @@ document.addEventListener("DOMContentLoaded", () => {
     addToHistory(title, img.src, url);
   });
 
-  // Initial load
   loadHistory();
 });
 </script>
+
   <!-- Recently Arrived Section -->
 <div class="recently-arrived-section">
   <h2>Recently Arrived</h2>
