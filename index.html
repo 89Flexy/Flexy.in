@@ -1315,5 +1315,87 @@ links.forEach(link=>{
   color: #aaa;
 }
 </style>
+  <!-- 🔵 Smooth Clickable Touch Cursor -->
+<style>
+  #touchArrow {
+    position: fixed;
+    width: 28px;
+    height: 28px;
+    background: white;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 99999;
+    display: none;
+    box-shadow: 0 0 16px rgba(255, 255, 255, 0.8);
+    transform: translate(-50%, -50%);
+    transition: left 0.08s ease-out, top 0.08s ease-out;
+  }
+
+  /* Invisible button (clickable but not visible) */
+  .cursor-toggle {
+    position: fixed;
+    top: 70px; /* adjust position */
+    left: 50%;
+    transform: translateX(-50%);
+    background: transparent;
+    color: transparent;
+    border: none;
+    border-radius: 25px;
+    padding: 25px 80px; /* increase size for easy tapping */
+    cursor: pointer;
+    z-index: 99999;
+    opacity: 0;
+  }
+</style>
+
+<div id="touchArrow"></div>
+<button class="cursor-toggle" onclick="toggleCursor()"></button>
+
+<script>
+  const arrow = document.getElementById("touchArrow");
+  const toggleBtn = document.querySelector(".cursor-toggle");
+  let arrowEnabled = false;
+  let arrowX = 0, arrowY = 0;
+
+  function toggleCursor() {
+    arrowEnabled = !arrowEnabled;
+    arrow.style.display = arrowEnabled ? "block" : "none";
+  }
+
+  function moveArrow(x, y) {
+    if (arrowEnabled) {
+      arrowX = x;
+      arrowY = y;
+      arrow.style.left = x + "px";
+      arrow.style.top = y + "px";
+    }
+  }
+
+  document.addEventListener("touchmove", (e) => {
+    const t = e.touches[0];
+    moveArrow(t.clientX, t.clientY);
+  });
+
+  document.addEventListener("mousemove", (e) => {
+    moveArrow(e.clientX, e.clientY);
+  });
+
+  document.addEventListener("touchend", (e) => {
+    if (!arrowEnabled) return;
+    const target = document.elementFromPoint(arrowX, arrowY);
+    if (target && target !== arrow && target !== toggleBtn) {
+      target.click();
+    }
+  });
+
+  document.addEventListener("mousedown", (e) => {
+    if (!arrowEnabled) return;
+    e.preventDefault();
+    const target = document.elementFromPoint(arrowX, arrowY);
+    if (target && target !== arrow && target !== toggleBtn) {
+      target.click();
+    }
+  });
+</script>
 </body>
 </html>
