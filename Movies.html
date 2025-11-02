@@ -107,7 +107,88 @@
   </script>
   <!DOCTYPE html>
 <html lang="en">
-<head>
+  
+<he<div class="pagination-container">
+  <div class="pagination" id="pagination"></div>
+</div>
+
+<script>
+const cards = document.querySelectorAll('.card');
+const cardsPerPage = 12;
+const totalPages = Math.ceil(cards.length / cardsPerPage);
+const pagination = document.getElementById('pagination');
+let currentPage = 1;
+
+function showPage(page) {
+  const start = (page - 1) * cardsPerPage;
+  const end = start + cardsPerPage;
+  cards.forEach((card, i) => {
+    card.style.display = (i >= start && i < end) ? 'block' : 'none';
+  });
+  updatePagination(page);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function updatePagination(activePage) {
+  pagination.innerHTML = '';
+
+  const maxVisible = 7; // show all pages if small number
+  for (let i = 1; i <= totalPages; i++) {
+    const btn = document.createElement('button');
+    btn.textContent = i;
+    if (i === activePage) btn.classList.add('active');
+    btn.addEventListener('click', () => showPage(i));
+    pagination.appendChild(btn);
+  }
+}
+
+showPage(currentPage);
+</script>
+
+<style>
+.pagination-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 40px 0 60px 0;
+  padding: 0 20px; /* ✅ Add safe padding left/right */
+  overflow: visible; /* ✅ Ensure no cutting */
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: nowrap; /* ✅ One line only */
+  gap: 10px;
+  flex-shrink: 0;
+  overflow: visible; /* ✅ Make sure edges visible */
+}
+
+.pagination button {
+  background: #111;
+  color: #fff;
+  border: 1px solid #333;
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-size: 15px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.pagination button:hover {
+  background: #222;
+  transform: scale(1.05);
+}
+
+.pagination button.active {
+  background: #00aaff;
+  color: #000;
+  box-shadow: 0 0 12px #00aaff;
+  transform: scale(1.1); /* ✅ Smaller scale to avoid cut */
+}
+</style>ad>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>OTT + Anime UI</title>
