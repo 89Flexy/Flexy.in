@@ -458,7 +458,62 @@ function liveSearch() {
     </div>
   </div>
 </div>
+<!-- Movable Cast Icon -->
+<div id="castButton" title="Cast to TV">
+  📺
+</div>
 
+<script>
+  const castBtn = document.getElementById("castButton");
+
+  // Make the button draggable
+  castBtn.style.position = "fixed";
+  castBtn.style.bottom = "80px";
+  castBtn.style.right = "20px";
+  castBtn.style.fontSize = "30px";
+  castBtn.style.cursor = "pointer";
+  castBtn.style.background = "rgba(0,0,0,0.6)";
+  castBtn.style.padding = "10px";
+  castBtn.style.borderRadius = "50%";
+  castBtn.style.boxShadow = "0 0 10px rgba(255,255,255,0.3)";
+  castBtn.style.zIndex = "9999";
+  castBtn.style.userSelect = "none";
+
+  let isDragging = false;
+  let offsetX, offsetY;
+
+  castBtn.addEventListener("mousedown", (e) => {
+    isDragging = true;
+    offsetX = e.clientX - castBtn.offsetLeft;
+    offsetY = e.clientY - castBtn.offsetTop;
+  });
+
+  document.addEventListener("mousemove", (e) => {
+    if (isDragging) {
+      castBtn.style.left = e.clientX - offsetX + "px";
+      castBtn.style.top = e.clientY - offsetY + "px";
+    }
+  });
+
+  document.addEventListener("mouseup", () => (isDragging = false));
+
+  // Cast button click action
+  castBtn.addEventListener("click", async () => {
+    if (!navigator.presentation) {
+      alert("Casting not supported in this browser.");
+      return;
+    }
+
+    try {
+      const presentationRequest = new PresentationRequest("https://89flexy.github.io/Flexy.in/");
+      await presentationRequest.start();
+      alert("Casting started!");
+    } catch (err) {
+      console.error("Cast failed:", err);
+      alert("Unable to connect to TV. Try Chrome’s built-in Cast option.");
+    }
+  });
+</script>
 <style>
 .ott-section {
   padding: 20px 10px;
