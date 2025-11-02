@@ -100,7 +100,205 @@ header::after {
 </style>
 </head>
 <body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>89FLEX</title>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+<style>
+body {
+  margin: 0;
+  background-color: #000;
+  font-family: 'Poppins', sans-serif;
+  color: white;
+}
 
+/* --- Top Bar --- */
+.top-bar {
+  background: #fff;
+  color: #000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 2000;
+}
+
+.top-bar-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.top-bar-left .material-icons-round {
+  font-size: 28px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.top-bar-title {
+  font-weight: 600;
+  font-size: 18px;
+}
+
+.top-bar-right {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.top-bar-right .material-icons-round {
+  font-size: 24px;
+  cursor: pointer;
+}
+
+/* Page content */
+.content {
+  padding-top: 65px;
+  text-align: center;
+}
+
+/* --- Overlay --- */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.6);
+  display: none;
+  z-index: 1000;
+  transition: opacity 0.3s ease;
+}
+
+/* --- Side Menu --- */
+.side-menu {
+  position: fixed;
+  top: 0;
+  left: -260px;
+  width: 220px;
+  height: 100%;
+  background: rgba(20, 20, 20, 0.85);
+  color: white;
+  transition: left 0.3s ease;
+  z-index: 1500;
+  padding-top: 70px;
+  border-right: 1px solid rgba(255,255,255,0.05);
+  display: flex;
+  flex-direction: column;
+}
+
+/* Menu Header (left aligned now) */
+.menu-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 20px 20px;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.menu-header img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 3px solid white;
+}
+
+.menu-header h3 {
+  margin: 0;
+  font-weight: 500;
+  font-size: 17px;
+}
+
+/* Menu links */
+.side-menu a {
+  display: flex;
+  align-items: center;
+  color: white;
+  text-decoration: none;
+  padding: 12px 20px;
+  font-size: 17px;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.side-menu a i {
+  margin-right: 12px;
+  font-size: 22px;
+}
+
+.side-menu a:hover {
+  background: rgba(255,255,255,0.1);
+  transform: translateX(5px);
+}
+</style>
+</head>
+<body>
+
+<!-- Top Bar -->
+<div class="top-bar">
+  <div class="top-bar-left">
+    <span class="material-icons-round" id="menuBtn">menu</span>
+    <span class="top-bar-title">Flexy</span>
+  </div>
+  <div class="top-bar-right">
+    <span class="material-icons-round">home</span>
+    <span class="material-icons-round" onclick="location.reload()">refresh</span>
+    <span class="material-icons-round">person</span>
+    <span class="material-icons-round">settings</span>
+  </div>
+</div>
+
+<!-- Side Menu -->
+<div class="side-menu" id="sideMenu">
+  <div class="menu-header">
+    <img src="https://i.ibb.co/jNvVmtD/89-Flexy-20251102-124509-0000.png" alt="logo">
+    <h3>Flexy</h3>
+  </div>
+  <a href="index.html"><i class="material-icons-round">home</i>Home</a>
+  <a href="Movies.html"><i class="material-icons-round">movie</i>Movies</a>
+  <a href="Series.html"><i class="material-icons-round">tv</i>Series</a>
+  <a href="Setting.html"><i class="material-icons-round">settings</i>Settings</a>
+</div>
+
+<!-- Overlay -->
+<div class="overlay" id="overlay"></div>
+
+<script>
+const menuBtn = document.getElementById("menuBtn");
+const sideMenu = document.getElementById("sideMenu");
+const overlay = document.getElementById("overlay");
+let isOpen = false;
+
+menuBtn.addEventListener("click", () => {
+  if (!isOpen) {
+    sideMenu.style.left = "0";
+    overlay.style.display = "block";
+    menuBtn.textContent = "close";
+    isOpen = true;
+  } else {
+    sideMenu.style.left = "-260px";
+    overlay.style.display = "none";
+    menuBtn.textContent = "menu";
+    isOpen = false;
+  }
+});
+
+overlay.addEventListener("click", () => {
+  sideMenu.style.left = "-260px";
+  overlay.style.display = "none";
+  menuBtn.textContent = "menu";
+  isOpen = false;
+});
+</script>
+<br>
+<br>
 <header>
   <img id="headerImage" src="https://i.ibb.co/9H5p70Jt/Picsart-25-09-20-16-41-45-083.jpg" alt="Header">
 </header>
