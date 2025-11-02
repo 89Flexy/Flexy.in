@@ -1315,5 +1315,72 @@ links.forEach(link=>{
   color: #aaa;
 }
 </style>
+  <!-- Google Cast SDK -->
+<script src="https://www.gstatic.com/cv/js/sender/v1/cast_sender.js?loadCastFramework=1"></script>
+
+<!-- YouTube-style Cast Button -->
+<google-cast-launcher id="castButton"></google-cast-launcher>
+
+<script>
+  // Initialize the Cast framework
+  window['__onGCastApiAvailable'] = function(isAvailable) {
+    if (isAvailable) {
+      const context = cast.framework.CastContext.getInstance();
+      context.setOptions({
+        receiverApplicationId: chrome.cast.media.DEFAULT_MEDIA_RECEIVER_APP_ID,
+        autoJoinPolicy: chrome.cast.AutoJoinPolicy.ORIGIN_SCOPED
+      });
+    }
+  };
+
+  // Automatically cast video when playing
+  document.addEventListener('play', function(e) {
+    const video = e.target;
+    if (video.tagName.toLowerCase() !== 'video') return;
+
+    const session = cast.framework.CastContext.getInstance().getCurrentSession();
+    if (session) {
+      const mediaInfo = new chrome.cast.media.MediaInfo(video.currentSrc, 'video/mp4');
+      mediaInfo.metadata = new chrome.cast.media.MovieMediaMetadata();
+      mediaInfo.metadata.title = document.title || "Now Playing";
+
+      const request = new chrome.cast.media.LoadRequest(mediaInfo);
+      session.loadMedia(request).then(
+        () => console.log('Casting video to TV...'),
+        err => console.error('Cast error:', err)
+      );
+    }
+  }, true);
+</script>
+
+<style>
+  /* Cast Button Styling (like YouTube) */
+  #castButton {
+    position: fixed;
+    bottom: 80px;
+    right: 20px;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: rgba(0,0,0,0.6);
+    box-shadow: 0 0 10px rgba(255,255,255,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+  }
+
+  google-cast-launcher {
+    width: 32px;
+    height: 32px;
+    --disconnected-color: rgba(255,255,255,0.9);
+    --connected-color: #1e90ff;
+    filter: drop-shadow(0 0 5px rgba(0,0,0,0.5));
+  }
+
+  google-cast-launcher:hover {
+    transform: scale(1.1);
+  }
+</style>
 </body>
 </html>
