@@ -568,66 +568,89 @@ ottItems.forEach(item => {
 }
 
 </style>
-  <section id="watch-history" style="display:none; padding: 20px; color: white;">
+<section id="watch-history" style="display:none; padding: 20px; color: white;">
   <h2 style="text-align:center; font-size: 1.5em; margin-bottom: 10px;">Watch History</h2>
-  <div id="history-list" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;"></div>
-  <div style="text-align:center; margin-top: 10px;">
-    <button id="clear-history" 
+  <div id="history-list" style="display:flex; flex-wrap:wrap; justify-content:center; gap:15px;"></div>
+  <div style="text-align:center; margin-top:10px;">
+    <button id="clear-history"
       style="background:#111; color:#fff; border:1px solid #333; border-radius:8px; padding:5px 10px; cursor:pointer;">
       Clear
     </button>
   </div>
-  </section>
-  <script>
-  // Load watch history from localStorage
+</section>
+<script>
+  // Load and display watch history
   function loadHistory() {
     const section = document.getElementById("watch-history");
     const historyContainer = document.getElementById("history-list");
     const history = JSON.parse(localStorage.getItem("watchHistory")) || [];
 
-    // Hide section if no history
     if (history.length === 0) {
       section.style.display = "none";
       return;
     }
 
-    // Show section if history exists
     section.style.display = "block";
     historyContainer.innerHTML = "";
 
     history.forEach(item => {
-      const div = document.createElement("div");
-      div.style.width = "120px";
-      div.style.textAlign = "center";
-      div.innerHTML = `
-        <img src="${item.image}" alt="${item.title}" style="width:100%; border-radius:10px;">
-        <p style="font-size: 0.9em; margin-top:5px;">${item.title}</p>
+      const card = document.createElement("div");
+      card.style.width = "150px";
+      card.style.background = "#111";
+      card.style.borderRadius = "10px";
+      card.style.overflow = "hidden";
+      card.style.textAlign = "center";
+      card.style.transition = "0.3s";
+      card.style.cursor = "pointer";
+      card.style.boxShadow = "0 0 10px rgba(255,255,255,0.1)";
+
+      card.innerHTML = `
+        <img src="${item.image}" alt="${item.title}" style="width:100%; height:200px; object-fit:cover;">
+        <p style="margin:8px 0; font-size:0.9em;">${item.title}</p>
       `;
-      historyContainer.appendChild(div);
+
+      card.addEventListener("click", () => {
+        if (item.url) window.location.href = item.url;
+      });
+
+      card.onmouseover = () => (card.style.boxShadow = "0 0 15px rgba(255,255,255,0.4)");
+      card.onmouseout = () => (card.style.boxShadow = "0 0 10px rgba(255,255,255,0.1)");
+
+      historyContainer.appendChild(card);
     });
   }
 
-  // Clear history button
-  document.getElementById("clear-history").addEventListener("click", () => {
-    localStorage.removeItem("watchHistory");
-    loadHistory();
-  });
-
-  // Add to history (call this when watching)
-  function addToHistory(title, image) {
-    const history = JSON.parse(localStorage.getItem("watchHistory")) || [];
-    const exists = history.some(item => item.title === title);
+  // Add anime to watch history
+  function addToHistory(title, image, url) {
+    let history = JSON.parse(localStorage.getItem("watchHistory")) || [];
+    const exists = history.find(item => item.title === title);
     if (!exists) {
-      history.unshift({ title, image });
-      if (history.length > 20) history.pop(); // Limit to last 20 items
+      history.unshift({ title, image, url });
+      if (history.length > 20) history.pop();
       localStorage.setItem("watchHistory", JSON.stringify(history));
     }
     loadHistory();
   }
 
-  // Load history when page starts
+  // Clear watch history
+  document.getElementById("clear-history").addEventListener("click", () => {
+    localStorage.removeItem("watchHistory");
+    loadHistory();
+  });
+
+  // Initialize
   loadHistory();
-  </script>
+
+  // Automatically add to history when clicking images
+  document.querySelectorAll("img").forEach(img => {
+    img.addEventListener("click", () => {
+      const titleElement = img.closest("div")?.querySelector("p");
+      const title = titleElement ? titleElement.textContent.trim() : "Untitled";
+      const url = img.closest("a")?.href || "#";
+      addToHistory(title, img.src, url);
+    });
+  });
+</script>
   <!-- Recently Arrived Section -->
 <div class="recently-arrived-section">
   <h2>Recently Arrived</h2>
