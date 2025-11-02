@@ -184,7 +184,7 @@
       </span>
       <button class="btn" onclick="alert('Casting feature coming soon!')">Cast</button>
     </div>
- <!-- Share With Friends -->
+   <!-- Share With Friends -->
     <div class="setting-item">
       <span>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -192,7 +192,7 @@
         </svg>
         Share With Friends
       </span>
-      <button class="btn" onclick="shareApp(https://www.webtonative.com/api/v1/demo/download/69070dc547e3e5dbc72773d6/ANDROID)">Share</button>
+     <button class="btn" onclick="shareApp()">Share</button>
     </div>
     <!-- Rate App -->
     <div class="setting-item">
@@ -336,6 +336,25 @@
         setActive(link.dataset.tab);
       });
     });
+  </script>
+  <script>
+  function shareApp() {
+    const shareData = {
+      title: '89Flexy',
+      text: '🔥 Check out this amazing app 89Flexy! Download it now 👇',
+      url: 'https://89flexy.github.io/Flexy.in/'
+    };
+
+    if (navigator.share) {
+      navigator.share(shareData)
+        .then(() => console.log('Thanks for sharing!'))
+        .catch((error) => console.error('Error sharing:', error));
+    } else {
+      // fallback for browsers that don’t support Web Share API
+      alert('Sharing is not supported on this device.');
+      window.open('https://89flexy.github.io/Flexy.in/');
+    }
+  }
   </script>
 </body>
 </html>
