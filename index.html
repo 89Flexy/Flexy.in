@@ -568,232 +568,76 @@ ottItems.forEach(item => {
 }
 
 </style>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>89FLEX – Watch Anime</title>
-
-  <style>
-    body {
-      margin: 0;
-      background: #000;
-      color: #fff;
-      font-family: Arial, sans-serif;
-    }
-
-    /* ---- WATCH HISTORY ---- */
-    #watch-history {
-      display: none;
-      padding: 20px;
-    }
-
-    #watch-history h2 {
-      color: #fff;
-      text-align: center;
-      font-size: 1.5em;
-      margin-bottom: 20px;
-    }
-
-    .anime-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-      gap: 15px;
-      justify-items: center;
-    }
-
-    .history-card {
-      background: #0b0b0d;
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 0 8px rgba(255, 255, 255, 0.1);
-      transition: transform 0.3s, box-shadow 0.3s;
-      cursor: pointer;
-      width: 150px;
-      text-align: center;
-    }
-
-    .history-card:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
-    }
-
-    .history-card img {
-      width: 100%;
-      height: 210px;
-      object-fit: cover;
-    }
-
-    .history-card p {
-      color: #fff;
-      font-size: 0.9em;
-      padding: 6px 0 10px 0;
-      margin: 0;
-    }
-
-    #clear-history {
-      background: #111;
-      color: #fff;
-      border: 1px solid #333;
-      border-radius: 8px;
-      padding: 6px 14px;
-      cursor: pointer;
-      font-size: 0.9em;
-      transition: 0.3s;
-    }
-
-    #clear-history:hover {
-      background: #1e1e1e;
-      box-shadow: 0 0 8px rgba(0, 150, 255, 0.7);
-    }
-
-    /* ---- ANIME ARRIVED SECTION ---- */
-    #anime-arrived {
-      padding: 20px;
-    }
-
-    #anime-arrived h2 {
-      color: #fff;
-      text-align: center;
-      font-size: 1.5em;
-      margin-bottom: 20px;
-    }
-
-    .anime-card {
-      background: #0b0b0d;
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 0 8px rgba(255, 255, 255, 0.1);
-      transition: transform 0.3s, box-shadow 0.3s;
-      cursor: pointer;
-      width: 150px;
-      text-align: center;
-    }
-
-    .anime-card:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
-    }
-
-    .anime-card img {
-      width: 100%;
-      height: 210px;
-      object-fit: cover;
-    }
-
-    .anime-card p {
-      color: #fff;
-      font-size: 0.9em;
-      padding: 6px 0 10px 0;
-      margin: 0;
-    }
-  </style>
-</head>
-<body>
-
-  <!-- ===== WATCH HISTORY ===== -->
-  <section id="watch-history">
-    <h2>Watch History</h2>
-    <div id="history-list" class="anime-grid"></div>
-    <div style="text-align:center; margin-top:15px;">
-      <button id="clear-history">Clear</button>
-    </div>
-  </section>
-
-  <!-- ===== ANIME ARRIVED ===== -->
-  <section id="anime-arrived">
-    <h2>Anime Arrived</h2>
-    <div class="anime-grid">
-      <div class="anime-card">
-        <a href="it-welcome.html">
-          <img src="https://i.ibb.co/QkN6BRb/it.jpg" alt="IT: Welcome to Derry">
-        </a>
-        <p>IT: Welcome to Derry</p>
-      </div>
-
-      <div class="anime-card">
-        <a href="onepiece.html">
-          <img src="https://i.ibb.co/dQ7W0gx/onepiece.jpg" alt="One Piece">
-        </a>
-        <p>One Piece</p>
-      </div>
-
-      <div class="anime-card">
-        <a href="naruto.html">
-          <img src="https://i.ibb.co/zrFDkFL/naruto.jpg" alt="Naruto">
-        </a>
-        <p>Naruto</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== SCRIPT ===== -->
+<!-- ================= WATCH HISTORY ================= -->
+<section id="watch-history" style="display:none;">
+  <div class="section-header" style="display:flex;align-items:center;justify-content:space-between;margin:0 15px;">
+    <h2 style="color:#fff;font-size:1.3em;">Watch History</h2>
+    <button id="clear-history"
+      style="background:#111;color:#fff;border:1px solid #333;border-radius:8px;padding:5px 12px;cursor:pointer;font-size:0.8em;">
+      Clear
+    </button>
+  </div>
+  <div id="history-list" class="cards-container" style="display:flex;flex-wrap:wrap;justify-content:center;gap:15px;margin:15px;">
+  </div>
+</section>
   <script>
-  document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", () => {
 
-    function loadHistory() {
-      const section = document.getElementById("watch-history");
-      const container = document.getElementById("history-list");
-      const history = JSON.parse(localStorage.getItem("watchHistory")) || [];
+  const watchSection = document.getElementById("watch-history");
+  const historyList = document.getElementById("history-list");
+  const clearBtn = document.getElementById("clear-history");
 
-      if (history.length === 0) {
-        section.style.display = "none";
-        return;
-      }
+  function loadHistory() {
+    const history = JSON.parse(localStorage.getItem("watchHistory")) || [];
+    if (history.length === 0) {
+      watchSection.style.display = "none";
+      return;
+    }
 
-      section.style.display = "block";
-      container.innerHTML = "";
+    watchSection.style.display = "block";
+    historyList.innerHTML = "";
 
-      history.forEach(item => {
-        const card = document.createElement("div");
-        card.className = "history-card";
-        card.innerHTML = `
+    history.forEach(item => {
+      const card = document.createElement("div");
+      card.className = "card"; // matches your site's .card design
+      card.innerHTML = `
+        <a href="${item.url}">
           <img src="${item.image}" alt="${item.title}">
-          <p>${item.title}</p>
-        `;
-        card.addEventListener("click", () => {
-          if (item.url && item.url !== "#") window.location.href = item.url;
-        });
-        container.appendChild(card);
-      });
-    }
-
-    function addToHistory(title, image, url) {
-      let history = JSON.parse(localStorage.getItem("watchHistory")) || [];
-      const exists = history.find(item => item.title === title);
-      if (!exists) {
-        history.unshift({ title, image, url });
-        if (history.length > 20) history.pop();
-        localStorage.setItem("watchHistory", JSON.stringify(history));
-      }
-      loadHistory();
-    }
-
-    // Clear history
-    document.getElementById("clear-history").addEventListener("click", () => {
-      localStorage.removeItem("watchHistory");
-      loadHistory();
+        </a>
+        <p>${item.title}</p>
+      `;
+      historyList.appendChild(card);
     });
+  }
 
-    // When any anime image clicked → add to history
-    const animeSection = document.querySelector("#anime-arrived");
-    animeSection.addEventListener("click", (e) => {
-      const img = e.target.closest("img");
-      if (!img) return;
-      const card = img.closest(".anime-card");
-      const titleEl = card?.querySelector("p");
-      const title = titleEl ? titleEl.textContent.trim() : "Untitled";
-      const url = img.closest("a")?.href || "#";
-      addToHistory(title, img.src, url);
-    });
+  function addToHistory(title, image, url) {
+    let history = JSON.parse(localStorage.getItem("watchHistory")) || [];
+    history = history.filter(item => item.title !== title);
+    history.unshift({ title, image, url });
+    if (history.length > 20) history.pop();
+    localStorage.setItem("watchHistory", JSON.stringify(history));
+    loadHistory();
+  }
 
+  // Clear button
+  clearBtn.addEventListener("click", () => {
+    localStorage.removeItem("watchHistory");
     loadHistory();
   });
-  </script>
 
-</body>
-</html>
+  // Add to history when clicking any anime card
+  document.body.addEventListener("click", (e) => {
+    const img = e.target.closest(".card img");
+    if (!img) return;
+    const card = img.closest(".card");
+    const title = card.querySelector("p")?.textContent.trim() || "Untitled";
+    const url = img.closest("a")?.href || "#";
+    addToHistory(title, img.src, url);
+  });
+
+  loadHistory();
+});
+  </script>
 
   <!-- Recently Arrived Section -->
 <div class="recently-arrived-section">
