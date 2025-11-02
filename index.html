@@ -568,76 +568,7 @@ ottItems.forEach(item => {
 }
 
 </style>
-<!-- ================= WATCH HISTORY ================= -->
-<section id="watch-history" style="display:none;">
-  <div class="section-header" style="display:flex;align-items:center;justify-content:space-between;margin:0 15px;">
-    <h2 style="color:#fff;font-size:1.3em;">Watch History</h2>
-    <button id="clear-history"
-      style="background:#111;color:#fff;border:1px solid #333;border-radius:8px;padding:5px 12px;cursor:pointer;font-size:0.8em;">
-      Clear
-    </button>
-  </div>
-  <div id="history-list" class="cards-container" style="display:flex;flex-wrap:wrap;justify-content:center;gap:15px;margin:15px;">
-  </div>
-</section>
-  <script>
-document.addEventListener("DOMContentLoaded", () => {
 
-  const watchSection = document.getElementById("watch-history");
-  const historyList = document.getElementById("history-list");
-  const clearBtn = document.getElementById("clear-history");
-
-  function loadHistory() {
-    const history = JSON.parse(localStorage.getItem("watchHistory")) || [];
-    if (history.length === 0) {
-      watchSection.style.display = "none";
-      return;
-    }
-
-    watchSection.style.display = "block";
-    historyList.innerHTML = "";
-
-    history.forEach(item => {
-      const card = document.createElement("div");
-      card.className = "card"; // matches your site's .card design
-      card.innerHTML = `
-        <a href="${item.url}">
-          <img src="${item.image}" alt="${item.title}">
-        </a>
-        <p>${item.title}</p>
-      `;
-      historyList.appendChild(card);
-    });
-  }
-
-  function addToHistory(title, image, url) {
-    let history = JSON.parse(localStorage.getItem("watchHistory")) || [];
-    history = history.filter(item => item.title !== title);
-    history.unshift({ title, image, url });
-    if (history.length > 20) history.pop();
-    localStorage.setItem("watchHistory", JSON.stringify(history));
-    loadHistory();
-  }
-
-  // Clear button
-  clearBtn.addEventListener("click", () => {
-    localStorage.removeItem("watchHistory");
-    loadHistory();
-  });
-
-  // Add to history when clicking any anime card
-  document.body.addEventListener("click", (e) => {
-    const img = e.target.closest(".card img");
-    if (!img) return;
-    const card = img.closest(".card");
-    const title = card.querySelector("p")?.textContent.trim() || "Untitled";
-    const url = img.closest("a")?.href || "#";
-    addToHistory(title, img.src, url);
-  });
-
-  loadHistory();
-});
-  </script>
 
   <!-- Recently Arrived Section -->
 <div class="recently-arrived-section">
