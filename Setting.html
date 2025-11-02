@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Settings</title>
+  <style>
+    body {
+      margin: 0;
+      background: #000;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      height: 100vh;
+      padding-top: 40px;
+      position: relative;
+    }
+
+    /* Close button (X) */
+    .close-btn {
+      position: absolute;
+      top: 12px;
+      left: 16px;
+      font-size: 42px;
+      color: #fff;
+      cursor: pointer;
+      transition: 0.2s;
+      text-decoration: none;
+    }
+
+    .close-btn:hover {
+      color: #1e90ff;
+      transform: scale(1.1);
+    }
+
+    img.logo {
+      width: 90px;
+      height: 90px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 3px solid #fff;
+      margin-bottom: 10px;
+    }
+
+    h1 {
+      font-size: 22px;
+      margin: 0;
+      text-align: center;
+    }
+
+    .divider {
+      width: 80%;
+      height: 1px;
+      background: #fff;
+      margin: 15px 0;
+      opacity: 0.6;
+    }
+
+    .download-text {
+      font-size: 14px;
+      color: #fff;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .download-text svg {
+      width: 20px;
+      height: 20px;
+      fill: #3ddc84; /* official Android green */
+    }
+
+    .btn {
+      margin-top: 10px;
+      background: #1e90ff;
+      color: #fff;
+      border: none;
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-size: 12px;
+      text-decoration: none;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .btn:hover {
+      background: #0077ff;
+    }
+  </style>
+</head>
+<body>
+  <a href="index.html" class="close-btn" onclick="window.history.back(); return false;">×</a>
+
+  <img class="logo" src="https://i.ibb.co/Swcv1T71/89-Flexy-20251102-124509-0000.png" alt="Logo" />
+  <h1>Settings</h1>
+  <div class="divider"></div>
+
+  <div class="download-text">
+    Download Apk For Android
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+      <path d="M17.6 9.48l1.43-2.48a.5.5 0 10-.87-.5l-1.43 2.47A7.47 7.47 0 0012 8a7.47 7.47 0 00-4.73 1l-1.43-2.47a.5.5 0 10-.87.5l1.43 2.48A7.48 7.48 0 004.02 15H20a7.48 7.48 0 00-2.4-5.52zM8 13a.75.75 0 110-1.5A.75.75 0 018 13zm8 0a.75.75 0 110-1.5A.75.75 0 0116 13zM5 16.5a.5.5 0 01.5-.5h13a.5.5 0 01.5.5V18a2 2 0 01-2 2H7a2 2 0 01-2-2v-1.5z"/>
+    </svg>
+  </div>
+
+  <a class="btn" href="https://www.webtonative.com/api/v1/demo/download/69070dc547e3e5dbc72773d6/ANDROID" download="89Flexy.apk">Download</a>
+</body>
+</html>
