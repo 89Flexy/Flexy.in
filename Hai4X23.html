@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Haikyu!!</title>
+<style>
+body {
+  margin: 0;
+  background-color: #000;
+  font-family: Arial, sans-serif;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.header-container {
+  position: relative;
+  width: 100%;
+  max-width: 1200px;
+  height: 450px;
+}
+.header-container img.header-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.header-container::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.8);
+  z-index: 1;
+}
+.poster-wrapper {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  z-index: 10;
+  max-width: 80%;
+}
+.poster-wrapper img.poster {
+  width: 150px;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(255,255,255,0.5);
+  display: block;
+  margin: 0 auto 10px auto;
+}
+.poster-wrapper h1 { margin:0; font-size:20px; color:#fff; }
+.poster-wrapper p { margin:5px 0 10px 0; font-size:13px; color:#ccc; }
+.content-section {
+  width: 89%;
+  max-width: 1000px;
+  background: #111;
+  margin: 15px auto 0 auto;
+  padding: 25px 20px;
+  border-radius: 10px;
+  text-align: center;
+}
+.content-section h3 { font-size:20px; color:#fff; margin-bottom:12px; text-transform:uppercase; letter-spacing:1px; }
+.content-section .overview { color:#bbb; font-size:15px; line-height:1.5; margin-bottom:15px; }
+.extra-info { color:#ccc; font-size:14px; margin:5px 0; font-weight: normal; }
+.video-section {
+  width: 89%;
+  max-width: 1000px;
+  margin: 20px auto;
+  padding: 20px;
+  background: #111;
+  border-radius: 10px;
+  text-align: center;
+}
+.video-section h3 {
+  font-size: 20px;
+  color: #fff;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.video-wrapper {
+  position: relative;
+  width: 100%;
+  padding-top: 56.25%;
+  background: #000;
+  border-radius: 10px;
+  overflow: hidden;
+}
+.video-wrapper iframe {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+</style>
+</head>
+<body>
+<div class="header-container">
+  <img src="https://i.ibb.co/65dCSVN/MV5-BYj-Yx-MWFl-YTAt-YTk0-YS00-NTMx-LWJj-NTQt-M2-E0-Njdh-YTRh-Nz-E4-Xk-Ey-Xk-Fqc-Gc-V1-FMjpg-UX1000.jpg" class="header-img" alt="Haikyu Header">
+  <div class="poster-wrapper">
+    <img src="https://i.ibb.co/65dCSVN/MV5-BYj-Yx-MWFl-YTAt-YTk0-YS00-NTMx-LWJj-NTQt-M2-E0-Njdh-YTRh-Nz-E4-Xk-Ey-Xk-Fqc-Gc-V1-FMjpg-UX1000.jpg" class="poster" alt="Haikyu Poster">
+    <h1>Haikyu!!</h1>
+    <p>[ Season 4 ]</p>
+  </div>
+</div>
+<div class="content-section">
+  <h3>Overview</h3>
+  <p class="overview">
+    Haikyu!! follows Shōyō Hinata, a determined volleyball player inspired by a short pro known as “The Little Giant.” 
+    Despite his height, Hinata’s energy and drive push him to form a strong team and face rivals like Kageyama — 
+    his former opponent turned teammate. The anime celebrates teamwork, perseverance, and the thrill of sports.
+  </p>
+  <p class="extra-info">Genre: Sports, Comedy, Drama</p>
+  <p class="extra-info">Language: Hindi, Japanese, English</p>
+</div>
+<div class="video-section">
+  <h3>Haikyu</h3>
+  <p>4X23</p>
+  <div class="video-wrapper">
+    <iframe src="https://play.zephyrflick.top/video/8a9b0ba84645ef18e1848b5407a90dd2" allowfullscreen></iframe>
+  </div>
+</div>
+</body>
+</html>
