@@ -1398,7 +1398,30 @@ links.forEach(link=>{
   font-size: 13px;
   color: #aaa;
 }
+  .fadeSlide {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 1s ease, transform 1s ease;
+}
+.fadeSlide.show {
+  opacity: 1;
+  transform: translateY(0);
+  }
+  window.addEventListener("load", () => {
+  const elems = document.querySelectorAll(".fadeSlide");
+  elems.forEach((el, i) => {
+    setTimeout(() => el.classList.add("show"), 500 * (i + 1));
+  });
+});
+    window.addEventListener("load", () => {
+  const elems = document.querySelectorAll(".fadeSlide");
+  elems.forEach((el, i) => {
+    setTimeout(() => el.classList.add("show"), 500 * (i + 1));
+  });
+});
 </style>
-
+<h1 id="title" class="fadeSlide">Welcome to My Website</h1>
+<img id="image" class="fadeSlide" src="…">
+  
 </body>
 </html>
