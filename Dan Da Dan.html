@@ -174,58 +174,70 @@ function toggleSeasonMenu() {
   menu.style.display = menu.style.display === "block" ? "none" : "block";
 }
 
-// Change Season
+// --- Episodes data ---
 const episodes = {
   1: [
- {img:"https://i.ibb.co/0R5yPtwR/season-1.jpg", title:"1X1", url:"DDD2X1.html"},
-{img:"https://i.ibb.co/DH319zNn/images-7.jpg", title:"1X2", url:"DDD2X2.html"},
-{img:"https://i.ibb.co/ZRH41Cy7/images-8.jpg", title:"1X3", url:"DDD2X3.html"},
-{img:"https://i.ibb.co/jPZxxdZt/images-9.jpg", title:"1X4", url:"DDD2X4.html"},
-{img:"https://i.ibb.co/gMbDyrm0/images-10.jpg", title:"1X5", url:"DDD2X5.html"},
-{img:"https://i.ibb.co/fYkhM7xR/hs8Ltew.jpg", title:"1X6", url:"DDD2X6.html"},
-{img:"https://i.ibb.co/LXCW4G5L/p28556064-e-h8-aa.jpg", title:"1X7", url:"DDD2X7.html"},
-{img:"https://i.ibb.co/DHqkK5Yy/Dan-Da-Dan-Episode-8-But-Why-Tho.jpg", title:"1X8", url:"DDD2X8.html"},
-{img:"https://i.ibb.co/HLgpGMk5/Serpo-Arc-Infobox-Anime.png", title:"1X9", url:"DDD2X9.html"},
-{img:"https://i.ibb.co/KpZkfnZW/p28661380-e-h10-aa.jpg", title:"1X10", url:"DDD2X10.html"},
-{img:"https://i.ibb.co/x8fkShpx/dan-da-dan-ep-11-1733844182053-1733844190773.jpg", title:"1X11", url:"DDD2X11.html"},
-{img:"https://i.ibb.co/zVtt7v4X/dandadan-ep-12-1734355747019-1734355939022.jpg", title:"1X12", url:"DDD2X12.html"},
-      ],
+    {img:"https://i.ibb.co/0R5yPtwR/season-1.jpg", title:"1X1", url:"DDD2X1.html"},
+    {img:"https://i.ibb.co/DH319zNn/images-7.jpg", title:"1X2", url:"DDD2X2.html"},
+    {img:"https://i.ibb.co/ZRH41Cy7/images-8.jpg", title:"1X3", url:"DDD2X3.html"},
+    {img:"https://i.ibb.co/jPZxxdZt/images-9.jpg", title:"1X4", url:"DDD2X4.html"},
+    {img:"https://i.ibb.co/gMbDyrm0/images-10.jpg", title:"1X5", url:"DDD2X5.html"},
+    {img:"https://i.ibb.co/fYkhM7xR/hs8Ltew.jpg", title:"1X6", url:"DDD2X6.html"},
+    {img:"https://i.ibb.co/LXCW4G5L/p28556064-e-h8-aa.jpg", title:"1X7", url:"DDD2X7.html"},
+    {img:"https://i.ibb.co/DHqkK5Yy/Dan-Da-Dan-Episode-8-But-Why-Tho.jpg", title:"1X8", url:"DDD2X8.html"},
+    {img:"https://i.ibb.co/HLgpGMk5/Serpo-Arc-Infobox-Anime.png", title:"1X9", url:"DDD2X9.html"},
+    {img:"https://i.ibb.co/KpZkfnZW/p28661380-e-h10-aa.jpg", title:"1X10", url:"DDD2X10.html"},
+    {img:"https://i.ibb.co/x8fkShpx/dan-da-dan-ep-11-1733844182053-1733844190773.jpg", title:"1X11", url:"DDD2X11.html"},
+    {img:"https://i.ibb.co/zVtt7v4X/dandadan-ep-12-1734355747019-1734355939022.jpg", title:"1X12", url:"DDD2X12.html"},
+  ],
   2: [
     {img:"https://i.ibb.co/8gjzLLD5/dan-da-dan-episode-19-feeling-kinda-gloomy-preview-images-v0-n5tbtnsqklif1.jpg", title:"2X1", url:"DDD1X1.html"},
-{img:"https://i.ibb.co/WpqNgsmG/images-29.jpg", title:"2X2", url:"DDD1X2.html"},
-{img:"https://i.ibb.co/XfBkvcbS/images-30.jpg", title:"2X3", url:"DDD1X3.html"},
-{img:"https://i.ibb.co/7x5myzhX/Momo-suprised-Dan-Da-Dan.png", title:"2X4", url:"DDD1X4.html"},
-{img:"https://i.ibb.co/W4FrMkt4/images-31.jpg", title:"2X5", url:"DDD1X5.html"},
-{img:"https://i.ibb.co/cXtXz7KW/Dan-Da-Dan-Kids.png", title:"2X6", url:"DDD1X6.html"},
-{img:"https://i.ibb.co/QjXNLb0q/Heart-Photo-Dan-Da-Dan.png", title:"2X7", url:"DDD1X7.html"},
-{img:"https://i.ibb.co/XfrBg3qZ/Okarun-Aira-Dan-Da-Dan.png", title:"2X8", url:"DDD1X8.html"},
-{img:"https://i.ibb.co/qLHXq1tV/images-32.jpg", title:"2X9", url:"DDD1X9.html"},
-{img:"https://i.ibb.co/mV5238fr/images-33.jpg", title:"2X10", url:"DDD1X10.html"},
-{img:"https://i.ibb.co/MD2PxKYt/Dandadan-Season-2-Episode-12-Review-2.jpg", title:"2X11", url:"DDD1X11.html"},
-{img:"https://i.ibb.co/XfBkvcbS/images-30.jpg", title:"2X12", url:"DDD1X12.html"},
+    {img:"https://i.ibb.co/WpqNgsmG/images-29.jpg", title:"2X2", url:"DDD1X2.html"},
+    {img:"https://i.ibb.co/XfBkvcbS/images-30.jpg", title:"2X3", url:"DDD1X3.html"},
+    {img:"https://i.ibb.co/7x5myzhX/Momo-suprised-Dan-Da-Dan.png", title:"2X4", url:"DDD1X4.html"},
+    {img:"https://i.ibb.co/W4FrMkt4/images-31.jpg", title:"2X5", url:"DDD1X5.html"},
+    {img:"https://i.ibb.co/cXtXz7KW/Dan-Da-Dan-Kids.png", title:"2X6", url:"DDD1X6.html"},
+    {img:"https://i.ibb.co/QjXNLb0q/Heart-Photo-Dan-Da-Dan.png", title:"2X7", url:"DDD1X7.html"},
+    {img:"https://i.ibb.co/XfrBg3qZ/Okarun-Aira-Dan-Da-Dan.png", title:"2X8", url:"DDD1X8.html"},
+    {img:"https://i.ibb.co/qLHXq1tV/images-32.jpg", title:"2X9", url:"DDD1X9.html"},
+    {img:"https://i.ibb.co/mV5238fr/images-33.jpg", title:"2X10", url:"DDD1X10.html"},
+    {img:"https://i.ibb.co/MD2PxKYt/Dandadan-Season-2-Episode-12-Review-2.jpg", title:"2X11", url:"DDD1X11.html"},
+    {img:"https://i.ibb.co/XfBkvcbS/images-30.jpg", title:"2X12", url:"DDD1X12.html"},
   ]
 };
 
+let currentSeason = 1;
+
+// --- Change season function ---
 function changeSeason(season) {
+  currentSeason = season;
   document.getElementById("seasonMenu").style.display = "none";
+  
+  // Clear grid
   const grid = document.getElementById("episode-grid");
   grid.innerHTML = "";
-  episodes[season].forEach(ep=>{
+
+  // Update heading
+  document.querySelector("#season-content h4").textContent = `Season ${season} Episodes`;
+
+  // Add new episodes
+  episodes[season].forEach(ep => {
     const div = document.createElement("div");
     div.className = "episode-box";
     div.innerHTML = `
-      <a href="${ep.url || '#'}">
+      <a href="${ep.url}">
         <img src="${ep.img}" alt="${ep.title}">
         <p>${ep.title}</p>
       </a>
     `;
     grid.appendChild(div);
   });
-  document.querySelector("#season-content h4").textContent = `Season ${season} Episodes`;
 }
-  
-// Default load season 1
-changeSeason(1);
+
+// --- Auto-load Season 1 by default ---
+window.onload = () => {
+  changeSeason(1);
+};
 </script>
 <!-- DMCA Notice and Copyright with PNG -->
 <div class="footer-notice">
@@ -444,7 +456,24 @@ links.forEach(link=>{
   });
 });
 </script>
-    
+   <script>
+let currentSeason = 1;
+
+function showSeason(seasonNumber) {
+  document.querySelectorAll('.season').forEach(s => s.style.display = 'none');
+  document.getElementById('season' + seasonNumber).style.display = 'block';
+  currentSeason = seasonNumber;
+}
+
+function playEpisode(episodeUrl) {
+  document.getElementById('videoPlayer').src = episodeUrl;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// 👇 Ye line nayi hai — page load hone par Season 1 show karega
+window.onload = () => showSeason(1);
+</script> 
   </script>
 </body>
 </html>
+  
