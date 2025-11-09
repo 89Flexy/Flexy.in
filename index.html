@@ -2,6 +2,70 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flexy.in with Preloader</title>
+<style>
+  /* 🔹 Preloader styles */
+  #preloader {
+    position: fixed;
+    inset: 0;
+    background: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+  }
+  .loading-dots {
+    display: flex;
+    gap: 12px;
+  }
+  .dot {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    animation: bounce 1.2s infinite ease-in-out;
+  }
+  .dot:nth-child(1) { background: #ff3c3c; animation-delay: 0s; }
+  .dot:nth-child(2) { background: #ff9f3c; animation-delay: 0.2s; }
+  .dot:nth-child(3) { background: #3cff9f; animation-delay: 0.4s; }
+  .dot:nth-child(4) { background: #3c83ff; animation-delay: 0.6s; }
+  .dot:nth-child(5) { background: #d53cff; animation-delay: 0.8s; }
+
+  @keyframes bounce {
+    0%, 80%, 100% { transform: scale(0); opacity: 0.3; }
+    40% { transform: scale(1); opacity: 1; }
+  }
+
+  /* 🔹 Body hide content until preloader is gone */
+  body { opacity: 0; transition: opacity 0.5s ease; }
+  body.loaded { opacity: 1; }
+
+</style>
+</head>
+<body>
+
+<!-- Preloader -->
+<div id="preloader">
+  <div class="loading-dots">
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+  </div>
+</div>
+<script>
+  // Hide preloader after page load
+  window.addEventListener("load", () => {
+    const loader = document.getElementById("preloader");
+    document.body.classList.add("loaded"); // fade in content
+    setTimeout(() => loader.style.display = "none", 2300); // keep preloader 1 sec
+  });
+</script>
+
+</body>
+</html>
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <!-- Search Engine Optimization by Rank Math - https://rankmath.com/ -->
 <title>89 Flex</title>
