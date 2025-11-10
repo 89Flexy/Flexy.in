@@ -190,16 +190,16 @@ function toggleSeasonMenu() {
 
 // Change Season
 const episodes = {
-  
   2: [
-{ img:"https://i.ibb.co/C3xXwBnR/images-9.jpg", title:"2X1", url:"Wed2X1.html" },
-{ img:"https://i.ibb.co/r2XX75NM/images-10.jpg", title:"2X2", url:"Wed2X2.html" },
-{ img:"https://i.ibb.co/Xk66DFfH/images-11.jpg", title:"2X3", url:"Wed2X3.html" },
-{ img:"https://i.ibb.co/LhQQKgq3/images-12.jpg", title:"2X4", url:"Wed2X4.html" },
-{ img:"https://i.ibb.co/kvjjXYn/images-13.jpg", title:"2X5", url:"Wed2X5.html" },
-{ img:"https://i.ibb.co/JwzRmM9L/images.jpg", title:"2X6", url:"Wed2X6.html" },
-{ img:"https://i.ibb.co/LXqfL11t/images-14.jpg", title:"2X7", url:"Wed2X7.html" },
-{ img:"https://i.ibb.co/5hfXpB62/images-15.jpg", title:"2X8", url:"Wed2X8.html" },
+    { img:"https://i.ibb.co/C3xXwBnR/images-9.jpg", title:"2X1", url:"Wed2X1.html" },
+    { img:"https://i.ibb.co/r2XX75NM/images-10.jpg", title:"2X2", url:"Wed2X2.html" },
+    { img:"https://i.ibb.co/Xk66DFfH/images-11.jpg", title:"2X3", url:"Wed2X3.html" },
+    { img:"https://i.ibb.co/LhQQKgq3/images-12.jpg", title:"2X4", url:"Wed2X4.html" },
+    { img:"https://i.ibb.co/kvjjXYn/images-13.jpg", title:"2X5", url:"Wed2X5.html" },
+    { img:"https://i.ibb.co/JwzRmM9L/images.jpg", title:"2X6", url:"Wed2X6.html" },
+    { img:"https://i.ibb.co/LXqfL11t/images-14.jpg", title:"2X7", url:"Wed2X7.html" },
+    { img:"https://i.ibb.co/5hfXpB62/images-15.jpg", title:"2X8", url:"Wed2X8.html" },
+  ]
 };
 
 function changeSeason(season) {
@@ -210,7 +210,7 @@ function changeSeason(season) {
     const div = document.createElement("div");
     div.className = "episode-box";
     div.innerHTML = `
-      <a href="${ep.url || '#'}">
+      <a href="${ep.url}">
         <img src="${ep.img}" alt="${ep.title}">
         <p>${ep.title}</p>
       </a>
@@ -219,9 +219,8 @@ function changeSeason(season) {
   });
   document.querySelector("#season-content h4").textContent = `Season ${season} Episodes`;
 }
-  
-// Default load season 1
-changeSeason(1);
+
+changeSeason(2);
 </script>
     <!-- DMCA Notice and Copyright with PNG -->
 <div class="footer-notice">
@@ -445,4 +444,3 @@ links.forEach(link=>{
 </body>
 </html>
 
-    <iframe src="https://play.zephyrflick.top/video/7248f12044a0790cd9933886d17234eb" 
