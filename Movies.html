@@ -5,34 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Anime Movies</title>
 
-<!-- 🔹 Preloader (Top Loading Bar) -->
 <style>
-#preloader {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 4px;
-  background: rgba(255, 255, 255, 0.05);
-  overflow: hidden;
-  z-index: 9999;
-}
-#preloader .loading-progress {
-  width: 0%;
-  height: 100%;
-  background: #00aaff;
-  box-shadow: 0 0 12px #00aaff;
-  animation: loadingBar 0.5s ease-in-out forwards;
-}
-
-@keyframes loadingBar {
-  0% { width: 0%; }
-  40% { width: 50%; }
-  70% { width: 80%; }
-  100% { width: 100%; }
-}
-
-/* Page styles */
 :root{
   --bg:#0b0b0d;
   --card-bg:rgba(255,255,255,0.04);
@@ -72,16 +45,21 @@ header h1{ font-size:18px; color:#fff; letter-spacing:0.5px; }
   cursor:pointer;
 }
 .card:hover{ transform:translateY(-3px); }
-.poster img{
-  display:block;
-  width:100%;
-  height:auto;
-  border-radius:8px;
-  opacity:0;
-  transform:translateY(10px);
-  transition: opacity 0.5s ease, transform 0.5s ease;
+.poster img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+  visibility: hidden; /* hide initially but reserve space */
 }
-.poster img.loaded{ opacity:1; transform:translateY(0); }
+.poster img.show {
+  opacity: 1;
+  transform: translateY(0);
+  visibility: visible;
+}
 
 /* pagination */
 .pagination-container{
@@ -148,9 +126,6 @@ header h1{ font-size:18px; color:#fff; letter-spacing:0.5px; }
 </head>
 <body>
 
-<!-- 🔹 Preloader (Top Bar) -->
-<div id="preloader"><div class="loading-progress"></div></div>
-
 <header>
   <img src="https://i.ibb.co/JjjyrZqT/20250920-142129.png" alt="Logo">
   <h1>Anime Movies</h1>
@@ -167,6 +142,8 @@ header h1{ font-size:18px; color:#fff; letter-spacing:0.5px; }
   <a class="card" href="NeZha2.html"><div class="poster"><img src="https://i.ibb.co/B5V04fLW/MV5-BMDg1-MDRm-Yzkt-MTI5-Ni00-Nj-Bm-LTg2-MDgt-ZGM4-Zj-M0-MGFk-ODdl-Xk-Ey-Xk-Fqc-Gc-V1.jpg" alt="Poster 7"></div></a>
   <a class="card" href="Spy.html"><div class="poster"><img src="https://i.ibb.co/GfCbpxmM/MV5-BMDlm-ZGJk-YTUt-NDcw-Ni00-YWMz-LTky-Nm-Mt-OWQ3-Mz-Vh-OTU5-YWY0-Xk-Ey-Xk-Fqc-Gc-V1-FMjpg-UX1000.jpg" alt="Poster 8"></div></a>
   <a class="card" href="RBTI.html"><div class="poster"><img src="https://i.ibb.co/TxR59WKp/512px-Ralph-Breaks-the-Internet-2018-film-poster.png" alt="Poster 9"></div></a>
+</section>
+  <!-- 🔹 Add more images as needed -->
 </section>
 
 <div class="pagination-container">
@@ -187,107 +164,59 @@ header h1{ font-size:18px; color:#fff; letter-spacing:0.5px; }
 </nav>
 
 <script>
-// 🔹 Show preloader immediately
-document.addEventListener("DOMContentLoaded", () => {
-  const preloader = document.getElementById("preloader");
-  const bar = preloader.querySelector(".loading-progress");
-  preloader.style.display = "block";
-  preloader.style.opacity = "1";
-  bar.style.width = "0%";
-});
-
-// 🔹 Wait until images finish loading
-window.addEventListener("load", () => {
-  const preloader = document.getElementById("preloader");
-  const bar = preloader.querySelector(".loading-progress");
-  const images = document.querySelectorAll(".poster img");
-
-  let loaded = 0;
-  const total = images.length;
-
-  images.forEach(img => {
-    // When each image loads, fade it in + update progress bar
-    img.addEventListener("load", () => {
-      img.classList.add("loaded");
-      loaded++;
-      const progress = Math.min((loaded / total) * 100, 100);
-      bar.style.width = progress + "%";
-      if (loaded === total) hidePreloader();
-    });
-
-    // If already cached by browser
-    if (img.complete) {
-      img.classList.add("loaded");
-      loaded++;
-      const progress = Math.min((loaded / total) * 100, 100);
-      bar.style.width = progress + "%";
-    }
-  });
-
-  // In case some images fail to load
-  setTimeout(() => hidePreloader(), 4000);
-
-  function hidePreloader() {
-    preloader.style.transition = "opacity 0.5s ease";
-    preloader.style.opacity = "0";
-    setTimeout(() => {
-      preloader.style.display = "none";
-    }, 500);
-  }
-});
-
-// 🔹 Pagination logic
 const cards = document.querySelectorAll('.card');
 const cardsPerPage = 12;
 const totalPages = Math.ceil(cards.length / cardsPerPage);
 const pagination = document.getElementById('pagination');
 let currentPage = 1;
 
-function showPage(page){
-  const start = (page-1)*cardsPerPage;
-  const end = start+cardsPerPage;
-  cards.forEach((card,i)=>{
-    card.style.display = (i>=start && i<end)?'block':'none';
+// 🔹 Animate only visible images (top to bottom)
+function animateVisibleImages() {
+  const visibleImgs = Array.from(document.querySelectorAll('.card'))
+    .filter(card => card.style.display === 'block')
+    .map(card => card.querySelector('.poster img'));
+    
+  visibleImgs.forEach((img, index) => {
+    img.classList.remove('show');
+    setTimeout(() => img.classList.add('show'), index * 120);
   });
-  updatePagination(page);
-  window.scrollTo({top:0,behavior:'smooth'});
 }
 
-function updatePagination(activePage){
-  pagination.innerHTML='';
-  for(let i=1;i<=totalPages;i++){
-    const btn=document.createElement('button');
-    btn.textContent=i;
-    if(i===activePage) btn.classList.add('active');
-    btn.addEventListener('click',()=>showPage(i));
+// 🔹 Show cards per page
+function showPage(page) {
+  const start = (page - 1) * cardsPerPage;
+  const end = start + cardsPerPage;
+
+  cards.forEach((card, i) => {
+    card.style.display = (i >= start && i < end) ? 'block' : 'none';
+  });
+
+  updatePagination(page);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  // Wait small delay before animating
+  setTimeout(animateVisibleImages, 150);
+}
+
+// 🔹 Pagination UI
+function updatePagination(activePage) {
+  pagination.innerHTML = '';
+  for (let i = 1; i <= totalPages; i++) {
+    const btn = document.createElement('button');
+    btn.textContent = i;
+    if (i === activePage) btn.classList.add('active');
+    btn.addEventListener('click', () => {
+      currentPage = i;
+      showPage(i);
+    });
     pagination.appendChild(btn);
   }
 }
-showPage(currentPage);
 
-// 🔹 Page navigation preloader
-document.querySelectorAll('a').forEach(link => {
-  link.addEventListener('click', e => {
-    const href = link.getAttribute('href');
-    if (href && !href.startsWith('#') && !href.startsWith('javascript:')) {
-      e.preventDefault();
-      const preloader = document.getElementById('preloader');
-      const bar = preloader.querySelector('.loading-progress');
-      preloader.style.display = 'block';
-      preloader.style.opacity = '1';
-      bar.style.width = '0%';
-      let progress = 0;
-      const interval = setInterval(() => {
-        progress += 15;
-        bar.style.width = progress + '%';
-        if (progress >= 100) {
-          clearInterval(interval);
-          window.location.href = href;
-        }
-      }, 80);
-    }
-  });
+// 🔹 Initial load
+window.addEventListener('load', () => {
+  showPage(currentPage);
 });
 </script>
 </body>
-</html>
+    </html>
