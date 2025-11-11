@@ -1,5 +1,3 @@
-
-  
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -33,10 +31,8 @@ body {
 .header-container::after {
   content: "";
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
   background: rgba(0,0,0,0.8);
   z-index: 1;
 }
@@ -69,64 +65,77 @@ body {
 .poster-wrapper h1 { margin:0; font-size:18px; color:#fff; }
 .poster-wrapper p { margin:5px 0 10px 0; font-size:13px; color:#ccc; }
 
-/* Content Section */
-.content-section {
+/* Video section */
+.video-section {
   width: 89%;
-  max-width: 1000px;
+  max-width: 600px;
+  margin: 25px auto;
+  padding: 10px;
   background: #111;
-  margin: 15px auto 0 auto;
-  padding: 25px 20px;
   border-radius: 10px;
   text-align: center;
 }
-.content-section h3 { font-size:20px; color:#fff; margin-bottom:12px; text-transform:uppercase; letter-spacing:1px; }
-.content-section .overview { color:#bbb; font-size:15px; line-height:1.5; margin-bottom:15px; }
-.extra-info { color:#ccc; font-size:14px; margin:5px 0; font-weight: normal; }
 
-/* Season Block */
-.season-block {
-  width: 89%;
-  max-width: 1000px;
-  background:#111;
-  margin:0 auto 30px auto;
-  padding:20px;
-  border-radius:10px;
-  text-align:left;
+.video-wrapper {
   position: relative;
-  z-index:5;
+  width: 100%;
+  padding-top: 56.25%; /* 16:9 ratio */
+  border-radius: 10px;
+  overflow: hidden;
 }
-.season-selector { margin-bottom:10px; }
-.season-selector button {
-  background:#222; color:#fff; border:1px solid #444;
-  padding:10px 15px; border-radius:6px; cursor:pointer; font-size:14px;
-}
-.season-selector button:hover { background:#333; }
-.season-menu {
-  display:none;
-  position:absolute;
-  background:#111; border:1px solid #333; border-radius:6px;
-  list-style:none; padding:0; margin:5px 0 0 0; width:150px; z-index:10;
-}
-.season-menu li {
-  padding:8px 12px; cursor:pointer; color:#ccc;
-}
-.season-menu li:hover { background:#222; color:#fff; }
 
-/* Season Content / Episodes */
-.season-content h4 { margin:0 0 10px 0; color:#fff; }
-.episode-grid {
-  display:grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap:8px;
-  width:100%;
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
+.video-wrapper iframe {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  border: none;
+  z-index: 2;
 }
-.episode-box { background:#111; border-radius:6px; overflow:hidden; text-align:center; cursor:pointer; padding:0; transition:transform 0.2s; }
-.episode-box:hover { transform:scale(1.05); }
-.episode-box img { width:100%; aspect-ratio:16/9; object-fit:cover; display:block; }
-.episode-box p { margin:3px 0; font-size:12px; color:#ccc; }
+
+/* 🕶 subtitle mask */
+.subtitle-mask {
+  position: absolute;
+  bottom: 0; left: 0;
+  width: 100%;
+  height: 22%;
+  background: #000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .3s;
+  z-index: 3; /* just above video */
+}
+
+.subtitle-mask.active {
+  opacity: 1;
+}
+
+/* 🎛 control bar */
+.video-controls {
+  width: 89%;
+  max-width: 600px;
+  margin: 10px auto 20px auto;
+  background: #111;
+  border-radius: 10px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  padding: 8px 10px;
+}
+
+.video-controls button {
+  background: #222;
+  color: #fff;
+  border: 1px solid #444;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background 0.3s ease;
+}
+
+.video-controls button:hover {
+  background: #333;
+}
 </style>
 </head>
 <body>
@@ -140,127 +149,71 @@ body {
   </div>
 </div>
 
-
-</style>
-
-
-<!-- Simple Video Player -->
+<!-- 🎬 Video Player -->
 <div class="video-section">
-  <div class="video-wrapper">
-    <iframe src="https://hubstream.art/#n35ag8" 
-            allowfullscreen>
-    </iframe>
+  <div class="video-wrapper" id="videoContainer">
+    <iframe src="https://hubstream.art/#n35ag8" allowfullscreen></iframe>
+    <div id="subtitleMask" class="subtitle-mask"></div>
   </div>
 </div>
-<!-- Fullscreen Control -->
-<div class="video-controls">
-  <button id="fullscreenBtn">Fullscreen</button>
-</div>
 
-<!-- Download Button -->
-<a href="https://cdn.fsl-buckets.work/Idli.Kadai.2025.1080p.10Bit.HEVC.DS4K.WEB-DL.Hindi.5.1-Tamil.5.1.ESub.x265-HDHub4u.Ms.mkv?token=78cde9fe1f15cd14bba933f7f5efe635_133" 
-   download class="download-image-link" title="Download">
-  <img src="https://i.ibb.co/4hPpgN2/images.jpg" alt="Download Icon" class="download-image" />
-</a>
+<!-- 🎛 Controls -->
+<div class="video-controls">
+  <button id="fullscreenBtn">⛶ Fullscreen</button>
+  <button id="subtitleBtn">☊ Subtitle OFF</button>
+</div>
 
 <style>
 .video-controls {
   width: 89%;
   max-width: 600px;
-  margin: 20px auto;
-  padding: 10px;
+  margin: 15px auto 25px auto;
   background: #111;
   border-radius: 10px;
   display: flex;
-  justify-content: center;
+  justify-content: center;   /* 🟢 center buttons */
+  gap: 12px;                 /* space between buttons */
+  padding: 10px;
 }
 
 .video-controls button {
   background: #222;
   color: #fff;
   border: 1px solid #444;
-  padding: 6px 12px;
+  padding: 8px 15px;
   border-radius: 6px;
   cursor: pointer;
   font-size: 14px;
+  transition: background 0.3s ease, transform 0.2s ease;
 }
 
 .video-controls button:hover {
   background: #333;
+  transform: scale(1.05);
 }
 </style>
-
 <script>
 const fullscreenBtn = document.getElementById('fullscreenBtn');
-fullscreenBtn.addEventListener('click', () => {
-  const iframe = document.querySelector('.video-wrapper iframe');
-  if (iframe.requestFullscreen) iframe.requestFullscreen();
-  else if (iframe.webkitRequestFullscreen) iframe.webkitRequestFullscreen();
-  else if (iframe.msRequestFullscreen) iframe.msRequestFullscreen();
-});
-</script>
-<style>
-.video-controls {
-  width: 89%;
-  max-width: 600px;
-  margin: 20px auto;
-  padding: 10px;
-  background: #111;
-  border-radius: 10px;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  gap: 10px;
-}
-
-.video-controls button,
-.video-controls select {
-  background: #222;
-  color: #fff;
-  border: 1px solid #444;
-  padding: 6px 10px;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 14px;
-}
-
-.video-controls button:hover,
-.video-controls select:hover {
-  background: #333;
-}
-</style>
-
-<script>
-// Get references
-const videoFrame = document.querySelector('.video-wrapper iframe');
-const playPauseBtn = document.getElementById('playPauseBtn');
 const subtitleBtn = document.getElementById('subtitleBtn');
-const qualitySelect = document.getElementById('qualitySelect');
-const fullscreenBtn = document.getElementById('fullscreenBtn');
+const subtitleMask = document.getElementById('subtitleMask');
+const iframe = document.querySelector('.video-wrapper iframe');
 
-// Play/Pause simulation (for iframe, usually video is on a platform)
-playPauseBtn.addEventListener('click', () => {
-  alert("Play/Pause: You'll need video player integration for actual control.");
-});
-
-// Subtitle toggle
-subtitleBtn.addEventListener('click', () => {
-  alert("Subtitles toggled. Needs player integration.");
-});
-
-// Quality select
-qualitySelect.addEventListener('change', (e) => {
-  alert(`Switching to ${e.target.value}p. Needs video source integration.`);
-});
-
-// Fullscreen
+// fullscreen toggle
 fullscreenBtn.addEventListener('click', () => {
-  const iframe = document.querySelector('.video-wrapper iframe');
   if (iframe.requestFullscreen) iframe.requestFullscreen();
   else if (iframe.webkitRequestFullscreen) iframe.webkitRequestFullscreen();
   else if (iframe.msRequestFullscreen) iframe.msRequestFullscreen();
 });
+
+// subtitle toggle
+let subtitlesHidden = false;
+subtitleBtn.addEventListener('click', () => {
+  subtitlesHidden = !subtitlesHidden;
+  subtitleMask.classList.toggle('active', subtitlesHidden);
+  subtitleBtn.textContent = subtitlesHidden ? '🈶 Subtitle ON' : '🈶 Subtitle OFF';
+});
 </script>
+
 <style>
 .download-image-link {
   display: inline-block;
@@ -630,6 +583,7 @@ links.forEach(link=>{
 </body>
 </html>
   
+
 
 
     
