@@ -1558,8 +1558,60 @@ links.forEach(link=>{
   });
 });
 </style>
-<h1 id="title" class="fadeSlide">Welcome to My Website</h1>
-<img id="image" class="fadeSlide" src="…">
+<script>  
+  // Detect Android TV or Remote devices  
+  const userAgent = navigator.userAgent.toLowerCase();  
+  const isTV = userAgent.includes("bravia") || userAgent.includes("smart-tv") ||   
+               userAgent.includes("tv") || location.search.includes("tv=1");  
   
+  if (isTV) {  
+    document.body.classList.add("tv-mode");  
+  
+    // Make ENTER key simulate click  
+    document.addEventListener("keydown", (e) => {  
+      if (e.key === "Enter" || e.keyCode === 13) {  
+        const focused = document.querySelector(".focused");  
+        if (focused) focused.click();  
+      }  
+    });  
+  
+    // Simple remote navigation  
+    const focusable = () => Array.from(document.querySelectorAll("a, button, .card"));  
+    let index = 0;  
+    document.addEventListener("keydown", (e) => {  
+      let items = focusable();  
+      if (!items.length) return;  
+      items.forEach(i => i.classList.remove("focused"));  
+      if (e.key === "ArrowRight") index = (index + 1) % items.length;  
+      if (e.key === "ArrowLeft") index = (index - 1 + items.length) % items.length;  
+      if (e.key === "ArrowDown") index = Math.min(index + 4, items.length - 1);  
+      if (e.key === "ArrowUp") index = Math.max(index - 4, 0);  
+      items[index].classList.add("focused");  
+      items[index].scrollIntoView({ block: "center", behavior: "smooth" });  
+    });  
+  }  
+</script>  <style>  
+/* TV Mode Styles */  
+body.tv-mode {  
+  background: #000;  
+  color: #fff;  
+  font-size: 1.5em;  
+  overflow: hidden;  
+}  
+  
+.tv-mode .card,  
+.tv-mode a,  
+.tv-mode button {  
+  outline: none;  
+  border-radius: 12px;  
+  transition: 0.3s;  
+}  
+  
+.tv-mode .focused {  
+  border: 3px solid #00aaff;  
+  box-shadow: 0 0 15px #00aaff;  
+  transform: scale(1.1);  
+}  
+</style>
 </body>
 </html>
