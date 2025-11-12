@@ -16,81 +16,27 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>89 Flexy</title>
-     <!-- LOCK SCREEN START -->
+<!-- LOCK SNIPPET (with 24-day expiry + hash check) -->
 <style>
-/* Lock Screen Styles */
-#lockScreen {
-  position: fixed;
-  inset: 0;
-  background: linear-gradient(-45deg, #0066ff, #ff0040, #ff66b2, #9400d3);
-  background-size: 400% 400%;
-  animation: gradientFlow 14s ease infinite;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;
-  font-family: "Poppins", sans-serif;
-}
-
-@keyframes gradientFlow {
-  0% { background-position: 0% 50%; }
-  25% { background-position: 50% 100%; }
-  50% { background-position: 100% 50%; }
-  75% { background-position: 50% 0%; }
-  100% { background-position: 0% 50%; }
-}
-
-.profile-logo {
-  width: 110px;
-  height: 110px;
-  border-radius: 50%;
-  cursor: pointer;
-  box-shadow: 0 0 30px rgba(255, 255, 255, 0.6);
-  transition: transform 0.4s ease, box-shadow 0.4s ease;
-}
-.profile-logo:hover {
-  transform: scale(1.08);
-  box-shadow: 0 0 50px rgba(255,255,255,0.9);
-}
-
-.key-container {
-  margin-top: 30px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.key-container input {
-  padding: 10px 14px;
-  border-radius: 8px;
-  background: transparent;
-  border: 1.5px solid #fff;
-  color: #fff;
-  font-size: 16px;
-  text-align: center;
-  margin-bottom: 15px;
-  outline: none;
-  width: 200px;
-}
-.key-container button {
-  padding: 8px 22px;
-  border-radius: 8px;
-  background: transparent;
-  border: 1.5px solid #fff;
-  color: #fff;
-  cursor: pointer;
-}
-.error {
-  color: #fff;
-  font-size: 18px;
-  margin-top: 15px;
-  text-align: center;
-}
+  #lockScreen {
+    position: fixed; inset: 0;
+    background: linear-gradient(-45deg,#0066ff,#ff0040,#ff66b2,#9400d3);
+    background-size: 400% 400%; animation: gradientFlow 14s ease infinite;
+    display:flex;flex-direction:column;justify-content:center;align-items:center;
+    z-index:9999;font-family:"Poppins",sans-serif;transition:opacity .6s ease;
+  }
+  @keyframes gradientFlow {
+    0%{background-position:0% 50%}25%{background-position:50% 100%}50%{background-position:100% 50%}75%{background-position:50% 0%}100%{background-position:0% 50%}
+  }
+  .profile-logo{ width:110px;height:110px;border-radius:50%;cursor:pointer;box-shadow:0 0 30px rgba(255,255,255,.6); }
+  .key-container{ margin-top:20px; display:flex; flex-direction:column; align-items:center; }
+  .key-container input{ padding:10px 14px; border-radius:8px; background:transparent; border:1.5px solid #fff; color:#fff; width:200px; text-align:center; outline:none; margin-bottom:12px;}
+  .key-container button{ padding:8px 20px; border-radius:8px; background:transparent; border:1.5px solid #fff; color:#fff; cursor:pointer;}
+  .error{ color:#ff6b6b; margin-top:10px; font-size:15px; text-shadow:0 0 4px #000; }
 </style>
 
-<div id="lockScreen">
-  <img src="https://i.ibb.co/fVmHbfP5/20251103-224113.jpg" class="profile-logo" id="profileLogo">
+<div id="lockScreen" aria-hidden="false">
+  <img src="https://i.ibb.co/fVmHbfP5/20251103-224113.jpg" class="profile-logo" id="profileLogo" alt="logo">
   <div class="key-container" id="keyContainer">
     <input type="password" id="keyInput" placeholder="Enter Key">
     <button id="proceedBtn">Proceed</button>
@@ -98,41 +44,106 @@
   </div>
 </div>
 
+<noscript>
+  <style>#lockScreen{display:none!important}#mainContent{display:block!important}</style>
+  <div style="position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:#000;color:#fff;z-index:10000;">
+    This site requires JavaScript to enforce the lock. Please enable JavaScript.
+  </div>
+</noscript>
+
+<!-- wrap your full page content here -->
+<div id="mainContent" style="display:none;">
+  <!-- full site content -->
+</div>
+
 <script>
-const correctKey = "123"; // Change key here
+(function(){
+  // CONFIG
+  const STORAGE_KEY = "89flexy_key_v1";     // localStorage key name (versioned)
+  const EXPIRY_DAYS = 24;                   // expiry in days
+  // SHA-256 hex of your secret key (DO NOT put plain key here)
+  const CORRECT_HASH = "73f57d8b692f8157f6d120e165f2155ad20471b377cf2b22dbf1128a834c91bd";
 
-const lockScreen = document.getElementById("lockScreen");
-const logo = document.getElementById("profileLogo");
-const keyContainer = document.getElementById("keyContainer");
-const input = document.getElementById("keyInput");
-const btn = document.getElementById("proceedBtn");
-const errorMsg = document.getElementById("errorMsg");
+  const lockScreen = document.getElementById("lockScreen");
+  const keyContainer = document.getElementById("keyContainer");
+  const logo = document.getElementById("profileLogo");
+  const input = document.getElementById("keyInput");
+  const btn = document.getElementById("proceedBtn");
+  const errorMsg = document.getElementById("errorMsg");
+  const main = document.getElementById("mainContent");
 
-// Initially hide input, show on logo click
-keyContainer.style.display = "none";
-logo.addEventListener("click", () => {
-  keyContainer.style.display = "flex";
-});
-
-// Button click check
-btn.addEventListener("click", () => {
-  if(input.value.trim() === correctKey){
-    lockScreen.style.display = "none"; // Unlock content
-    localStorage.setItem("userKey", correctKey);
-  } else {
-    errorMsg.textContent = "❌  Wrong Key ❌"
-    input.value = "";
+  // helper: sha256 -> hex using Web Crypto API
+  async function sha256Hex(text){
+    const enc = new TextEncoder().encode(text);
+    const hashBuf = await crypto.subtle.digest("SHA-256", enc);
+    const hashArray = Array.from(new Uint8Array(hashBuf));
+    return hashArray.map(b => b.toString(16).padStart(2,"0")).join("");
   }
-});
 
-// Auto unlock if key saved
-window.addEventListener("load", () => {
-  if(localStorage.getItem("userKey") === correctKey){
-    lockScreen.style.display = "none";
+  // Save to storage with timestamp (hash only)
+  function saveUnlock(){
+    const payload = { h: CORRECT_HASH, t: Date.now() };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
   }
-});
+
+  // Validate saved lock (hash match + not expired)
+  function isSavedValid(){
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if(!raw) return false;
+      const obj = JSON.parse(raw);
+      if(!obj.h || obj.h !== CORRECT_HASH) { localStorage.removeItem(STORAGE_KEY); return false; }
+      const ageMs = Date.now() - (obj.t || 0);
+      if(ageMs > EXPIRY_DAYS * 24 * 60 * 60 * 1000) { localStorage.removeItem(STORAGE_KEY); return false; }
+      return true;
+    } catch(e) { localStorage.removeItem(STORAGE_KEY); return false; }
+  }
+
+  // unlock UI
+  function unlockUI(){
+    lockScreen.style.opacity = "0";
+    setTimeout(()=>{ lockScreen.style.display = "none"; main.style.display = "block"; }, 450);
+    saveUnlock();
+  }
+
+  // On load: check saved validity
+  window.addEventListener("load", () => {
+    if(isSavedValid()){
+      lockScreen.style.display = "none";
+      main.style.display = "block";
+    } else {
+      lockScreen.style.display = "flex";
+      main.style.display = "none";
+    }
+  }, false);
+
+  // show input only after logo click
+  keyContainer.style.display = "none";
+  logo.addEventListener("click", () => {
+    keyContainer.style.display = "flex";
+    setTimeout(()=> input.focus(), 50);
+  });
+
+  // Enter key support
+  input.addEventListener("keydown", (e) => { if(e.key === "Enter") btn.click(); });
+
+  // verify on click
+  btn.addEventListener("click", async () => {
+    const val = input.value || "";
+    if(!val.trim()){ errorMsg.textContent = "Enter key"; return; }
+    const hv = await sha256Hex(val.trim());
+    if(hv === CORRECT_HASH){
+      errorMsg.textContent = "";
+      unlockUI();
+    } else {
+      errorMsg.textContent = "Wrong Key!";
+      input.value = "";
+    }
+  });
+
+})();
 </script>
-<!-- LOCK SCREEN END -->
+<!-- END LOCK SNIPPET -->
 <style>
   /* 🔹 Preloader styles */
   
