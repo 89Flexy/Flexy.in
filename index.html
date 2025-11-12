@@ -470,15 +470,41 @@ function liveSearch() {
   <h2>OTT APPS</h2>
   <div class="ott-slider">
     <div class="ott-track">
-      <div class="ott-item"><img src="https://i.ibb.co/RGkXQyDX/Screen-Shot-2018-02-26-at-10-53-26-PM.png" alt="Crunchyroll"></div>
-      <div class="ott-item"><img src="https://i.ibb.co/mVTqPMB1/20250920-174316.jpg" alt="Disney+ Hotstar"></div>
-      <div class="ott-item"><img src="https://i.ibb.co/RkddJm1x/Netflix-Symbol.png" alt="Netflix"></div>
-      <div class="ott-item"><img src="https://i.ibb.co/99pvhNBm/718b41945aab84bd2276c762266931d0.jpg" alt="Prime Video"></div>
-      <div class="ott-item"><img src="https://i.ibb.co/0jnK8RL6/b55dd53b92a36348bde3994500a1a593.jpg" alt="Mxplayer"></div>
-      <div class="ott-item"><img src="https://i.ibb.co/zHNpqVKS/images.jpg" alt="Mxplayer"></div>
-      <div class="ott-item"><img src="https://i.ibb.co/jjxrYD5/images-1.jpg" alt="Mxplayer"></div>
-    
-
+      <div class="ott-item">
+        <a href="https://www.crunchyroll.com/" target="_blank">
+          <img src="https://i.ibb.co/RGkXQyDX/Screen-Shot-2018-02-26-at-10-53-26-PM.png" alt="Crunchyroll">
+        </a>
+      </div>
+      <div class="ott-item">
+        <a href="https://www.hotstar.com/" target="_blank">
+          <img src="https://i.ibb.co/mVTqPMB1/20250920-174316.jpg" alt="Disney+ Hotstar">
+        </a>
+      </div>
+      <div class="ott-item">
+        <a href="https://www.netflix.com/" target="_blank">
+          <img src="https://i.ibb.co/RkddJm1x/Netflix-Symbol.png" alt="Netflix">
+        </a>
+      </div>
+      <div class="ott-item">
+        <a href="https://www.primevideo.com/" target="_blank">
+          <img src="https://i.ibb.co/99pvhNBm/718b41945aab84bd2276c762266931d0.jpg" alt="Prime Video">
+        </a>
+      </div>
+      <div class="ott-item">
+        <a href="https://www.mxplayer.in/" target="_blank">
+          <img src="https://i.ibb.co/0jnK8RL6/b55dd53b92a36348bde3994500a1a593.jpg" alt="Mxplayer">
+        </a>
+      </div>
+      <div class="ott-item">
+        <a href="https://www.zee5.com/" target="_blank">
+          <img src="https://i.ibb.co/zHNpqVKS/images.jpg" alt="Zee5">
+        </a>
+      </div>
+      <div class="ott-item">
+        <a href="https://www.sonyliv.com/" target="_blank">
+          <img src="https://i.ibb.co/jjxrYD5/images-1.jpg" alt="SonyLiv">
+        </a>
+      </div>
     </div>
   </div>
 </div>
@@ -498,14 +524,14 @@ function liveSearch() {
 .ott-slider {
   width: 100%;
   overflow-x: auto;
-  overflow-y: visible; /* allow images to scale without cutting */
-  padding: 10px; /* space above/below images */
+  overflow-y: visible;
+  padding: 10px;
   white-space: nowrap;
   -webkit-overflow-scrolling: touch;
   box-sizing: border-box;
   display: flex;
-  align-items: center; /* vertically center items */
-  height: 100px; /* increase slider block height */
+  align-items: center;
+  height: 100px;
 }
 
 .ott-track {
@@ -514,22 +540,22 @@ function liveSearch() {
 }
 
 .ott-item {
-  flex: 0 0 calc((100% - 45px) / 4); /* show 4 items at a time */
+  flex: 0 0 calc((100% - 45px) / 4);
   box-sizing: border-box;
   cursor: pointer;
   transition: transform 0.2s, box-shadow 0.2s;
-  overflow: visible; /* allow glow/scale to show */
+  overflow: visible;
   display: flex;
-  align-items: center; /* center image vertically */
-  justify-content: center; /* center image horizontally */
-  height: 100%; 
+  align-items: center;
+  justify-content: center;
+  height: 100%;
 }
 
 .ott-item img {
   width: 100%;
-  height: 80px; /* image height */
+  height: 80px;
   object-fit: cover;
-  border-radius: 40px; /* pill-shaped */
+  border-radius: 40px;
   transition: transform 0.2s, box-shadow 0.2s;
 }
 
@@ -538,6 +564,12 @@ function liveSearch() {
   transform: scale(1.1);
   box-shadow: 0 0 12px 4px #1E90FF;
 }
+
+.ott-item a {
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+}
 </style>
 
 <script>
@@ -545,46 +577,11 @@ const ottItems = document.querySelectorAll('.ott-item');
 
 ottItems.forEach(item => {
   item.addEventListener('click', () => {
-    // Remove 'clicked' class from all items
     ottItems.forEach(i => i.classList.remove('clicked'));
-    // Add 'clicked' class to this item
     item.classList.add('clicked');
   });
 });
 </script>
-  </div>
-</div>
-
-<style>
-.ott-slider {
-  width: 100%;
-  overflow-x: auto;
-  overflow-y: hidden;
-  padding: 0 10px; /* add some padding so first and last items aren't cut */
-  white-space: nowrap;
-  -webkit-overflow-scrolling: touch;
-  box-sizing: border-box;
-}
-
-.ott-track {
-  display: flex;
-  gap: 10px;
-}
-
-.ott-item {
-  flex: 0 0 auto; /* prevent shrinking and allow proper width */
-  width: 60px; /* adjust as needed */
-}
-
-.ott-item img {
-  width: 100%;
-  height: 60px;
-  object-fit: contain;
-  display: block;
-  border-radius: 8px;
-}
-
-</style>
 
 <!-- Recently Arrived Section -->
 <div class="recently-arrived-section">
