@@ -507,6 +507,7 @@ function liveSearch() {
         <div class="ott-item">
         <a href="https://m.youtube.com/" target="_blank">
           <img src="https://i.ibb.co/s9x47nmz/You-Tube-full-color-icon-2017-svg.png" alt="Youtube">
+        </div>
         </a>
       </div>
     </div>
@@ -514,78 +515,102 @@ function liveSearch() {
 </div>
 
 <style>
-.ott-section {
-  padding: 20px 10px;
-}
-
-.ott-section h2 {
-  color: #fff;
-  font-size: 22px;
-  margin-bottom: 10px;
-  padding-left: 10px;
-}
-
-.ott-slider {
-  width: 100%;
-  overflow-x: auto;
-  overflow-y: visible;
-  padding: 10px;
-  white-space: nowrap;
-  -webkit-overflow-scrolling: touch;
-  box-sizing: border-box;
-  display: flex;
-  align-items: center;
-  height: 100px;
-}
-
-.ott-track {
-  display: flex;
-  gap: 15px;
-}
-
-.ott-item {
-  flex: 0 0 calc((100% - 45px) / 4);
-  box-sizing: border-box;
-  cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
-  overflow: visible;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-}
-
-.ott-item img {
-  width: 100%;
-  height: 80px;
-  object-fit: cover;
-  border-radius: 20px;
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-
-/* Blue glow on click */
-.ott-item.clicked img {
-  transform: scale(1.1);
-  box-shadow: 0 0 12px 4px #1E90FF;
-}
-
-.ott-item a {
-  display: inline-block;
-  width: 100%;
-  height: 100%;
-}
+.ott-section {  
+  padding: 20px 10px;  
+}  
+  
+.ott-section h2 {  
+  color: #fff;  
+  font-size: 22px;  
+  margin-bottom: 10px;  
+  padding-left: 10px;  
+}  
+  
+.ott-slider {  
+  width: 100%;  
+  overflow-x: auto;  
+  overflow-y: visible; /* allow images to scale without cutting */  
+  padding: 10px; /* space above/below images */  
+  white-space: nowrap;  
+  -webkit-overflow-scrolling: touch;  
+  box-sizing: border-box;  
+  display: flex;  
+  align-items: center; /* vertically center items */  
+  height: 100px; /* increase slider block height */  
+}  
+  
+.ott-track {  
+  display: flex;  
+  gap: 15px;  
+}  
+  
+.ott-item {  
+  flex: 0 0 calc((100% - 45px) / 4); /* show 4 items at a time */  
+  box-sizing: border-box;  
+  cursor: pointer;  
+  transition: transform 0.2s, box-shadow 0.2s;  
+  overflow: visible; /* allow glow/scale to show */  
+  display: flex;  
+  align-items: center; /* center image vertically */  
+  justify-content: center; /* center image horizontally */  
+  height: 100%;   
+}  
+  
+.ott-item img {  
+  width: 100%;  
+  height: 80px; /* image height */  
+  object-fit: cover;  
+  border-radius: 40px; /* pill-shaped */  
+  transition: transform 0.2s, box-shadow 0.2s;  
+}  
+  
+/* Blue glow on click */  
+.ott-item.clicked img {  
+  transform: scale(1.1);  
+  box-shadow: 0 0 12px 4px #1E90FF;  
+}  
+</style>  <script>  
+const ottItems = document.querySelectorAll('.ott-item');  
+  
+ottItems.forEach(item => {  
+  item.addEventListener('click', () => {  
+    // Remove 'clicked' class from all items  
+    ottItems.forEach(i => i.classList.remove('clicked'));  
+    // Add 'clicked' class to this item  
+    item.classList.add('clicked');  
+  });  
+});  
+</script>    </div>  
+</div>  <style>  
+.ott-slider {  
+  width: 100%;  
+  overflow-x: auto;  
+  overflow-y: hidden;  
+  padding: 0 10px; /* add some padding so first and last items aren't cut */  
+  white-space: nowrap;  
+  -webkit-overflow-scrolling: touch;  
+  box-sizing: border-box;  
+}  
+  
+.ott-track {  
+  display: flex;  
+  gap: 10px;  
+}  
+  
+.ott-item {  
+  flex: 0 0 auto; /* prevent shrinking and allow proper width */  
+  width: 60px; /* adjust as needed */  
+}  
+  
+.ott-item img {  
+  width: 100%;  
+  height: 60px;  
+  object-fit: contain;  
+  display: block;  
+  border-radius: 8px;  
+}  
+  
 </style>
-
-<script>
-const ottItems = document.querySelectorAll('.ott-item');
-
-ottItems.forEach(item => {
-  item.addEventListener('click', () => {
-    ottItems.forEach(i => i.classList.remove('clicked'));
-    item.classList.add('clicked');
-  });
-});
-</script>
 
 <!-- Recently Arrived Section -->
 <div class="recently-arrived-section">
