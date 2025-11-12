@@ -32,17 +32,11 @@
   .key-container{ margin-top:20px; display:flex; flex-direction:column; align-items:center; }
   .key-container input{ padding:10px 14px; border-radius:8px; background:transparent; border:1.5px solid #fff; color:#fff; width:200px; text-align:center; outline:none; margin-bottom:12px;}
   .key-container button{ padding:8px 20px; border-radius:8px; background:transparent; border:1.5px solid #fff; color:#fff; cursor:pointer;}
-  .error{ color:#fff; margin-top:10px; font-size:15px; text-shadow:0 0 4px #000; }
+  .error{ color:#ff6b6b; margin-top:10px; font-size:15px; text-shadow:0 0 4px #000; }
 </style>
 
 <div id="lockScreen" aria-hidden="false">
   <img src="https://i.ibb.co/fVmHbfP5/20251103-224113.jpg" class="profile-logo" id="profileLogo" alt="logo">
-  <div style="text-align:center; margin-top:20px;">
-   
-
-
-  </div>
-</div>
   <div class="key-container" id="keyContainer">
     <input type="password" id="keyInput" placeholder="Enter Key">
     <button id="proceedBtn">Proceed</button>
@@ -142,7 +136,7 @@
       errorMsg.textContent = "";
       unlockUI();
     } else {
-      errorMsg.textContent = "❌ Wrong Key! ❌";
+      errorMsg.textContent = "Wrong Key!";
       input.value = "";
     }
   });
