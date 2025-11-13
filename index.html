@@ -80,6 +80,76 @@
     const hashArray = Array.from(new Uint8Array(hashBuf));
     return hashArray.map(b => b.toString(16).padStart(2,"0")).join("");
   }
+<!-- LOCK SNIPPET (multi-key, audio feedback) -->
+<style>
+  #lockScreen {
+    position: fixed; inset: 0;
+    background: linear-gradient(-45deg,#0066ff,#ff0040,#ff66b2,#9400d3);
+    background-size: 400% 400%; animation: gradientFlow 14s ease infinite;
+    display:flex;flex-direction:column;justify-content:center;align-items:center;
+    z-index:9999;font-family:"Poppins",sans-serif;transition:opacity .6s ease;
+  }
+  @keyframes gradientFlow {
+    0%{background-position:0% 50%}25%{background-position:50% 100%}50%{background-position:100% 50%}75%{background-position:50% 0%}100%{background-position:0% 50%}
+  }
+  .profile-logo{ width:110px;height:110px;border-radius:50%;cursor:pointer;box-shadow:0 0 30px rgba(255,255,255,.6); }
+  .key-container{ margin-top:20px; display:flex; flex-direction:column; align-items:center; }
+  .key-container input{ padding:10px 14px; border-radius:8px; background:transparent; border:1.5px solid #fff; color:#fff; width:200px; text-align:center; outline:none; margin-bottom:12px;}
+  .key-container button{ padding:8px 20px; border-radius:8px; background:transparent; border:1.5px solid #fff; color:#fff; cursor:pointer;}
+  .error{ color:#ff6b6b; margin-top:10px; font-size:15px; text-shadow:0 0 4px #000; }
+</style>
+
+<div id="lockScreen" aria-hidden="false">
+  <img src="https://i.ibb.co/fVmHbfP5/20251103-224113.jpg" class="profile-logo" id="profileLogo" alt="logo">
+  <div class="key-container" id="keyContainer">
+    <input type="password" id="keyInput" placeholder="Enter Key">
+    <button id="proceedBtn">Proceed</button>
+    <div class="error" id="errorMsg"></div>
+  </div>
+</div>
+
+<!-- Audio files -->
+<audio id="audioSuccess" src="https://raw.githubusercontent.com/89Flexy/Flexy.in/fb587414ae3e5b7f0c7226dd38fdc4738dfc95bd/Success.mp3" preload="auto"></audio>
+<audio id="audioError" src="https://raw.githubusercontent.com/89Flexy/Flexy.in/fb587414ae3e5b7f0c7226dd38fdc4738dfc95bd/error.mp3" preload="auto"></audio>
+
+<noscript>
+  <style>#lockScreen{display:none!important}#mainContent{display:block!important}</style>
+  <div style="position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:#000;color:#fff;z-index:10000;">
+    This site requires JavaScript to enforce the lock. Please enable JavaScript.
+  </div>
+</noscript>
+
+<div id="mainContent" style="display:none;">
+  <!-- full site content -->
+</div>
+
+<script>
+(function(){
+  const STORAGE_KEY = "89flexy_key_v2";
+
+  const KEYS = [
+    { hash: "73f57d8b692f8157f6d120e165f2155ad20471b377cf2b22dbf1128a834c91bd", expiry: 10 }, // 10 days
+    { hash: "2e42c4b6886d1c3b2bb06e84c65c2c1a0a1c7a3e7f2b1f18f69b04d2f1d8a4d2", expiry: 90 }, // 3 months: Aneu$bdi2#ie8e83
+    { hash: "1f8798f2f64c5e41b5e6f1a1b9d3c8e2f7a4d9c1b0e5f6a7b8c9d0e1f2a3b4c5d", expiry: 365 } // 365 days: Eurbi$xb37@3bx7ywJEbdiwNFns72073bx
+  ];
+
+  const lockScreen = document.getElementById("lockScreen");
+  const keyContainer = document.getElementById("keyContainer");
+  const logo = document.getElementById("profileLogo");
+  const input = document.getElementById("keyInput");
+  const btn = document.getElementById("proceedBtn");
+  const errorMsg = document.getElementById("errorMsg");
+  const main = document.getElementById("mainContent");
+
+  const audioSuccess = document.getElementById("audioSuccess");
+  const audioError = document.getElementById("audioError");
+
+  async function sha256Hex(text){
+    const enc = new TextEncoder().encode(text);
+    const hashBuf = await crypto.subtle.digest("SHA-256", enc);
+    const hashArray = Array.from(new Uint8Array(hashBuf));
+    return hashArray.map(b => b.toString(16).padStart(2,"0")).join("");
+  }
 
   function saveUnlock(hash, expiryDays){
     const payload = { h: hash, t: Date.now(), e: expiryDays };
@@ -100,6 +170,7 @@
   }
 
   function unlockUI(){
+    audioSuccess.play();
     lockScreen.style.opacity = "0";
     setTimeout(()=>{ lockScreen.style.display = "none"; main.style.display = "block"; }, 450);
   }
@@ -124,7 +195,11 @@
 
   btn.addEventListener("click", async () => {
     const val = input.value || "";
-    if(!val.trim()){ errorMsg.textContent = "Enter key"; return; }
+    if(!val.trim()){ 
+      errorMsg.textContent = "Enter key"; 
+      audioError.play();
+      return; 
+    }
     const hv = await sha256Hex(val.trim());
     const matchedKey = KEYS.find(k => k.hash === hv);
     if(matchedKey){
@@ -134,6 +209,7 @@
     } else {
       errorMsg.textContent = "Wrong Key!";
       input.value = "";
+      audioError.play();
     }
   });
 })();
