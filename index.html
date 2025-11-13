@@ -32,7 +32,7 @@
   .key-container{ margin-top:20px; display:flex; flex-direction:column; align-items:center; }
   .key-container input{ padding:10px 14px; border-radius:8px; background:transparent; border:1.5px solid #fff; color:#fff; width:200px; text-align:center; outline:none; margin-bottom:12px;}
   .key-container button{ padding:8px 20px; border-radius:8px; background:transparent; border:1.5px solid #fff; color:#fff; cursor:pointer;}
-  .error{ color:#ff6b6b; margin-top:10px; font-size:15px; text-shadow:0 0 4px #000; }
+  .error{ color:#fff; margin-top:10px; font-size:15px; text-shadow:0 0 4px #000; }
 </style>
 
 <div id="lockScreen" aria-hidden="false">
@@ -143,7 +143,7 @@
       saveUnlock(matchedKey.hash, matchedKey.expiry);
       unlockUI();
     } else {
-      errorMsg.textContent = "Wrong Key!";
+      errorMsg.textContent = "🤟🏻❌Wrong Key!❌🤟🏻";
       input.value = "";
       audioError.play();
     }
