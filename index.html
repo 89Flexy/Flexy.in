@@ -16,7 +16,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>89 Flexy</title>
-<!-- LOCK SNIPPET (with 24-day expiry + hash check) -->
+<!-- LOCK SNIPPET (multi-key, different expiries) -->
 <style>
   #lockScreen {
     position: fixed; inset: 0;
@@ -51,18 +51,20 @@
   </div>
 </noscript>
 
-<!-- wrap your full page content here -->
 <div id="mainContent" style="display:none;">
   <!-- full site content -->
 </div>
 
 <script>
 (function(){
-  // CONFIG
-  const STORAGE_KEY = "89flexy_key_v1";     // localStorage key name (versioned)
-  const EXPIRY_DAYS = 24;                   // expiry in days
-  // SHA-256 hex of your secret key (DO NOT put plain key here)
-  const CORRECT_HASH = "73f57d8b692f8157f6d120e165f2155ad20471b377cf2b22dbf1128a834c91bd";
+  const STORAGE_KEY = "89flexy_key_v2"; // localStorage key
+
+  // SHA-256 hashes of your keys and expiry in days
+  const KEYS = [
+    { hash: "73f57d8b692f8157f6d120e165f2155ad20471b377cf2b22dbf1128a834c91bd", expiry: 10 }, // 10 days
+    { hash: "2e42c4b6886d1c3b2bb06e84c65c2c1a0a1c7a3e7f2b1f18f69b04d2f1d8a4d2", expiry: 90 }, // 3 months: Aneu$bdi2#ie8e83
+    { hash: "1f8798f2f64c5e41b5e6f1a1b9d3c8e2f7a4d9c1b0e5f6a7b8c9d0e1f2a3b4c5d", expiry: 365 } // 365 days: Eurbi$xb37@3bx7ywJEbdiwNFns72073bx
+  ];
 
   const lockScreen = document.getElementById("lockScreen");
   const keyContainer = document.getElementById("keyContainer");
@@ -72,7 +74,6 @@
   const errorMsg = document.getElementById("errorMsg");
   const main = document.getElementById("mainContent");
 
-  // helper: sha256 -> hex using Web Crypto API
   async function sha256Hex(text){
     const enc = new TextEncoder().encode(text);
     const hashBuf = await crypto.subtle.digest("SHA-256", enc);
@@ -80,33 +81,29 @@
     return hashArray.map(b => b.toString(16).padStart(2,"0")).join("");
   }
 
-  // Save to storage with timestamp (hash only)
-  function saveUnlock(){
-    const payload = { h: CORRECT_HASH, t: Date.now() };
+  function saveUnlock(hash, expiryDays){
+    const payload = { h: hash, t: Date.now(), e: expiryDays };
     localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
   }
 
-  // Validate saved lock (hash match + not expired)
   function isSavedValid(){
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
       if(!raw) return false;
       const obj = JSON.parse(raw);
-      if(!obj.h || obj.h !== CORRECT_HASH) { localStorage.removeItem(STORAGE_KEY); return false; }
+      if(!obj.h || !obj.e) { localStorage.removeItem(STORAGE_KEY); return false; }
       const ageMs = Date.now() - (obj.t || 0);
-      if(ageMs > EXPIRY_DAYS * 24 * 60 * 60 * 1000) { localStorage.removeItem(STORAGE_KEY); return false; }
+      if(ageMs > obj.e * 24 * 60 * 60 * 1000) { localStorage.removeItem(STORAGE_KEY); return false; }
+      if(!KEYS.some(k => k.hash === obj.h)) { localStorage.removeItem(STORAGE_KEY); return false; }
       return true;
     } catch(e) { localStorage.removeItem(STORAGE_KEY); return false; }
   }
 
-  // unlock UI
   function unlockUI(){
     lockScreen.style.opacity = "0";
     setTimeout(()=>{ lockScreen.style.display = "none"; main.style.display = "block"; }, 450);
-    saveUnlock();
   }
 
-  // On load: check saved validity
   window.addEventListener("load", () => {
     if(isSavedValid()){
       lockScreen.style.display = "none";
@@ -117,33 +114,30 @@
     }
   }, false);
 
-  // show input only after logo click
   keyContainer.style.display = "none";
   logo.addEventListener("click", () => {
     keyContainer.style.display = "flex";
     setTimeout(()=> input.focus(), 50);
   });
 
-  // Enter key support
   input.addEventListener("keydown", (e) => { if(e.key === "Enter") btn.click(); });
 
-  // verify on click
   btn.addEventListener("click", async () => {
     const val = input.value || "";
     if(!val.trim()){ errorMsg.textContent = "Enter key"; return; }
     const hv = await sha256Hex(val.trim());
-    if(hv === CORRECT_HASH){
+    const matchedKey = KEYS.find(k => k.hash === hv);
+    if(matchedKey){
       errorMsg.textContent = "";
+      saveUnlock(matchedKey.hash, matchedKey.expiry);
       unlockUI();
     } else {
       errorMsg.textContent = "Wrong Key!";
       input.value = "";
     }
   });
-
 })();
 </script>
-<!-- END LOCK SNIPPET -->
 <style>
   /* 🔹 Preloader styles */
   
