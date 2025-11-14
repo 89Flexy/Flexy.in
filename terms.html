@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Terms & Conditions — Flexy.in</title>
+  <meta name="description" content="Terms and conditions for Flexy.in" />
+  <link rel="icon" href="/favicon.ico" />
+  <style>
+    :root{
+      --bg:#000;
+      --card:#0f1113;
+      --muted:#bfc6cc;
+      --accent:#2dd4bf;
+      --maxw:900px;
+      --radius:12px;
+    }
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background:var(--bg);
+      color:#fff;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      display:flex;
+      align-items:flex-start;
+      justify-content:center;
+      padding:40px 16px;
+      line-height:1.6;
+    }
+    .container{
+      width:100%;
+      max-width:var(--maxw);
+    }
+    .card{
+      background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border-radius:var(--radius);
+      padding:28px;
+      box-shadow: 0 6px 30px rgba(0,0,0,0.6);
+      border:1px solid rgba(255,255,255,0.03);
+    }
+    header{
+      display:flex;
+      align-items:center;
+      gap:14px;
+      margin-bottom:8px;
+    }
+    .logo {
+      width:54px;height:54px;border-radius:10px;
+      background:linear-gradient(135deg,#242424,#111);
+      display:flex;align-items:center;justify-content:center;
+      font-weight:700;color:var(--accent);font-size:18px;
+      border:1px solid rgba(255,255,255,0.03);
+    }
+    h1{margin:0;font-size:20px}
+    p.lead{margin:8px 0 20px;color:var(--muted)}
+    h2{color:#fff;margin-top:20px;margin-bottom:8px;font-size:16px}
+    ul{margin:0 0 12px 20px;color:var(--muted)}
+    a{color:var(--accent);text-decoration:none}
+    .meta{font-size:13px;color:var(--muted);margin-top:12px}
+    footer{margin-top:20px;font-size:13px;color:var(--muted);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
+    @media (max-width:520px){
+      body{padding:20px 12px}
+      .card{padding:20px}
+      .logo{width:44px;height:44px;font-size:16px}
+    }
+  </style>
+</head>
+<body>
+  <main class="container">
+    <article class="card" role="main" aria-labelledby="terms-title">
+      <header>
+        <div class="logo">89</div>
+        <div>
+          <h1 id="terms-title">Terms &amp; Conditions</h1>
+          <div class="meta">
+        </div>
+      </header>
+
+      <p class="lead">
+        Welcome to <strong>Flexy.in</strong> (the “Website”). By using this Website you accept these Terms &amp; Conditions.
+        If you do not agree, please do not use the Website.
+      </p>
+
+      <h2>1. Acceptance of Terms</h2>
+      <p>
+        By accessing or using this Website, you confirm that you have the legal capacity to enter into these Terms.
+      </p>
+
+      <h2>2. License to Use</h2>
+      <p>
+        Subject to these Terms, Flexy grants you a limited, non-exclusive, revocable license to use the Website for personal,
+        non-commercial purposes. You must not:
+      </p>
+      <ul>
+        <li>Copy, reproduce, adapt, modify, or create derivative works of the Website content for commercial use.</li>
+        <li>Remove or tamper with any copyright, trademark or other proprietary notices.</li>
+        <li>Attempt to reverse-engineer or interfere with the Website code or services.</li>
+      </ul>
+
+      <h2>3. Content Disclaimer</h2>
+      <p>
+        Content is provided “as-is.” Flexy.in does not guarantee accuracy, completeness, or reliability of any content.
+        Use of the Website is at your own risk.
+      </p>
+
+      <h2>4. Limitation of Liability</h2>
+      <p>
+        To the greatest extent permitted by law, Flexy.in, its owners, affiliates and service providers will not be liable for
+        any direct, indirect, incidental, consequential or special damages arising from your use of (or inability to use)
+        the Website.
+      </p>
+
+      <h2>5. Third-party Links</h2>
+      <p>
+        The Website may link to third-party sites. These links are provided for convenience only and Flexy.in is not responsible
+        for their content or availability.
+      </p>
+
+      <h2>6. Changes to Service or Terms</h2>
+      <p>
+        Flexy.in may update the Website, features, or these Terms at any time. We recommend checking this page periodically.
+        Continued use after changes indicates acceptance of the updated Terms.
+      </p>
+
+      <h2>7. Governing Law</h2>
+      <p>
+        These Terms are governed by the laws of <strong><!-- REPLACE: put your jurisdiction, e.g. "Maharashtra, India" --></strong>.
+        Any disputes related to these Terms will be subject to the exclusive jurisdiction of the courts in that region.
+      </p>
+
+      <h2>8. Contact</h2>
+      <p>
+        For questions about these Terms, contact: <br />
+        <strong><!-- REPLACE: email@example.com --></strong>
+      </p>
+
+      <footer>
+        <div>© <span id="year"></span> 89 Flexy.</div>
+        <div><a href="/index.html">Home</a> · <a href="/privacy.html">Privacy Policy</a></div>
+      </footer>
+    </article>
+  </main>
+
+  <script>
+    // auto-fill current year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Optional: simple smooth-scroll support if you anchor into page
+    (function(){
+      if('scrollBehavior' in document.documentElement.style) return;
+      // polyfill only for old browsers is omitted — keep it simple
+    })();
+  </script>
+</body>
+</html>
