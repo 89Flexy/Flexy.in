@@ -401,6 +401,7 @@ body {
   <a href="Movies.html"><i class="material-icons-round">movie</i>Anime Movies</a>
   <a href="Series.html"><i class="material-icons-round">tv</i>Series</a>
     <a href="Others.html"><i class="material-icons-round">movie</i>Movies/Series</a>
+       <a href="MCU.html"><i class="material-icons-round">tv</i>Marvel Movies</a>
   <a href="Setting.html"><i class="material-icons-round">settings</i>Settings</a>
 </div>
 
@@ -551,12 +552,12 @@ const animeList = [
     { title: "Dude", url: "DD.html" },
      { title: "Doraemon the Movie: Nobita’s Earth Symphony", url: "Dori.html" },
     { title: "In Your Dreams", url: "IYD.html" },
-  { title: "", url: ".html" },
-    { title: "", url: ".html" },
-  { title: "", url: ".html" },
-    { title: "", url: ".html" },
-  { title: "", url: ".html" },
-    { title: "", url: ".html" },
+  { title: "Spiderman", url: "SM.html" },
+    { title: "Spiderman 2", url: "SM2.html" },
+  { title: "Spiderman 3", url: "SM3.html" },
+    { title: "Amazing Spiderman", url: "ASM.html" },
+  { title: "Amazing Spiderman 2", url: "ASM2.html" },
+    { title: "SpiderMan Far from Home", url: "FFHSM.html" },
     { title: "", url: ".html" },
     { title: "", url: ".html" },
   { title: "", url: ".html" },
@@ -1300,7 +1301,7 @@ ottItems.forEach(item => {
 </style>
 <!-- Other Section -->
 <div class="recently-arrived-section">
-  <h2>Other</h2>
+  <h2>Movies/Series</h2>
   <div class="recently-slider">
     <div class="recently-track">
 <a href="DD.html" class="recently-item">
@@ -1544,7 +1545,123 @@ ottItems.forEach(item => {
       
   </div>
 </div>
+<style>
+.recently-slider {
+  height: 200px; /* increase to fit image + text */
+  align-items: flex-start; /* make items start from top */
+}
+.recently-slider {
+  display: flex;
+  align-items: flex-start; /* top-align items */
+}
 
+
+.recently-arrived-section {
+  padding: 20px 10px;
+}
+
+.recently-arrived-section h2 {
+  color: #fff;
+  font-size: 22px;
+  margin-bottom: 10px;
+  padding-left: 10px;
+}
+
+.recently-slider {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: visible; /* allow full height for images */
+  padding: 10px;
+  white-space: nowrap;
+  -webkit-overflow-scrolling: touch;
+  box-sizing: border-box;
+  display: flex;
+  align-items: flex-start; /* align items from top to prevent cutting */
+  height: auto; /* remove fixed height */
+}
+
+.recently-track {
+  display: flex;
+  gap: 15px;
+}
+
+.recently-item {
+  flex: 0 0 auto;
+  width: 110px; /* adjust as needed */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+}
+
+.recently-item img {
+  width: 100%;
+  height: auto; /* auto to preserve full image */
+  max-height: 160px; /* optional, limit max height */
+  object-fit: contain; /* show full image */
+  border-radius: 12px;
+  margin-bottom: 5px; /* space for text */
+  display: block;
+}
+
+.recently-item p {
+  margin-top: 5px;
+  color: #fff;
+  font-size: 14px;
+  text-align: center;
+  white-space: normal; /* allow wrapping */
+  word-wrap: break-word;
+}
+.recently-item:hover img {
+  transform: scale(1.05);
+  box-shadow: 0 0 1px 1px #1E90FF;
+}
+</style>
+<!-- Anime Movies Section -->
+<div class="recently-arrived-section">
+  <h2>Marvel Movies</h2>
+  <div class="recently-slider">
+    <div class="recently-track">
+   <a href="SM.html" class="recently-item">
+        <img src="https://i.ibb.co/bRKBtpq9/512px-Spider-Man-2002-film-poster.jpg" alt="Jujutsu Kaisen 0">
+        <p></p>
+   </a>
+         <a href="SM2.html" class="recently-item">
+        <img src="https://i.ibb.co/tM7z8kJw/Spider-Man-2-poster.jpg" alt="Jujutsu Kaisen 0">
+        <p></p>
+   </a>
+         <a href="SM3.html" class="recently-item">
+        <img src="https://i.ibb.co/C5vxVq8j/268.jpg" alt="Jujutsu Kaisen 0">
+        <p></p>
+    </a>
+      <a href="ASM.html" class="recently-item">
+        <img src="https://i.ibb.co/1t9NJrms/the-amazing-spider-man-2012-movie-posters-v0-1zdlffrm4a691.jpg" alt="Chainsaw Man the Movie: Reze Arc">
+        <p></p>
+     </a>
+         <a href="ASM2.html" class="recently-item">
+        <img src="https://i.ibb.co/1GRQ0WR9/512px-The-Amazing-Spider-Man-2-poster.jpg" alt="Jujutsu Kaisen 0">
+        <p></p>
+   </a>
+         <a href="FFHSM.html" class="recently-item">
+        <img src="https://i.ibb.co/F4jj21Xk/4q2-NNj4-S5d-G2-RLF9-Cp-Xsej7y-Xl.jpg" alt="Jujutsu Kaisen 0">
+        <p></p>
+   </a>
+         <a href="IM.html" class="recently-item">
+        <img src="https://i.ibb.co/tppKhj1d/78l-Ptwv72e-TNq-FW9-COBYI0d-WDJa.jpg" alt="Chainsaw Man the Movie: Reze Arc">
+        <p></p>
+     </a>
+         <a href="IM2.html" class="recently-item">
+        <img src="https://i.ibb.co/TqtYgbG9/Iron-Man-2.jpg" alt="Jujutsu Kaisen 0">
+        <p></p>
+   </a>
+         <a href="IM3.html" class="recently-item">
+        <img src="https://i.ibb.co/pjLrGMVK/Iron-Man-3-2013.jpg" alt="Jujutsu Kaisen 0">
+        <p></p>
+         </a>
+         
+    </div>
+  </div>
+</div>
 <style>
 .recently-slider {
   height: 200px; /* increase to fit image + text */
