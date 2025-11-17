@@ -2037,45 +2037,67 @@ body.tv-mode {
   transform: scale(1.1);  
 }  
 </style>
-     <button id="installBtn" style="
-  display:none;
-  padding:10px 18px;
-  background:#2dd4bf;
-  color:#fff;
-  border:none;
-  border-radius:8px;
-  margin:20px auto;
-  font-size:16px;
-  cursor:pointer;">
-  Install App
-     </button>
-     <script>
-  let deferredPrompt;
-  const installBtn = document.getElementById("installBtn");
+<div id="installBox" style="
+  position: fixed;
+  bottom: 70px; 
+  left: 0;
+  right: 0;
+  background: #111;
+  color: #b44bff;
+  padding: 14px;
+  text-align: center;
+  font-size: 16px;
+  border-top: 1px solid #333;
+  display: none;
+  z-index: 9999;
+">
+  <span style="color:#c86bff;">Install this site as an app</span>
 
-  window.addEventListener("beforeinstallprompt", (e) => {
+  <button id="installClose" style="
+    position:absolute;
+    right: 10px;
+    top: 10px;
+    background:none;
+    color:#fff;
+    border:none;
+    font-size:18px;
+  ">×</button>
+</div>
+     <script>
+let deferredPrompt;
+const installBox = document.getElementById("installBox");
+const closeBtn = document.getElementById("installClose");
+
+window.addEventListener("beforeinstallprompt", (e) => {
     e.preventDefault();
     deferredPrompt = e;
-    installBtn.style.display = "block"; // Show button
-  });
+    installBox.style.display = "block"; // SHOW bar
+});
 
-  installBtn.addEventListener("click", async () => {
-    installBtn.style.display = "none";
+// When user taps the bar anywhere → show install prompt
+installBox.addEventListener("click", async () => {
+    if (!deferredPrompt) return;
+
     deferredPrompt.prompt();
-    const result = await deferredPrompt.userChoice;
+    const choice = await deferredPrompt.userChoice;
 
-    if (result.outcome === "accepted") {
-      console.log("App Installed");
-    } else {
-      console.log("Install Dismissed");
+    if (choice.outcome === "accepted") {
+        installBox.style.display = "none"; // HIDE after install
     }
 
     deferredPrompt = null;
-  });
+});
 
-  window.addEventListener("appinstalled", () => {
-    console.log("PWA Installed");
-  });
-     </script>
+// Close button X just hides the bar
+closeBtn.addEventListener("click", (e) => {
+    e.stopPropagation(); // prevent install popup on close tap
+    installBox.style.display = "none";
+});
+
+// Hide if already installed
+window.addEventListener("appinstalled", () => {
+    installBox.style.display = "none";
+});
+</script>
 </body>
 </html>
