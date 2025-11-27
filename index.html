@@ -1996,5 +1996,35 @@ window.addEventListener("appinstalled", () => {
     installBox.style.display = "none";
 });
 </script>
+     <iframe src="gesture.html" style="width:0;height:0;border:0;overflow:hidden;"></iframe>
+
+<script>
+window.addEventListener("message", function(e) {
+    if (e.data.type === "gesture") {
+        
+        if (e.data.action === "left") {
+            console.log("Swipe Left");
+            // Yaha tera previous action
+        }
+
+        if (e.data.action === "right") {
+            console.log("Swipe Right");
+            // Yaha tera next action
+        }
+
+        if (e.data.action === "open") {
+            console.log("Open Hand");
+        }
+
+        if (e.data.action === "fist") {
+            console.log("Fist");
+        }
+
+        if (e.data.action === "point") {
+            console.log("Point");
+        }
+    }
+});
+</script>
 </body>
 </html>
