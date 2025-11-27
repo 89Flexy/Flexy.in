@@ -1960,71 +1960,128 @@ body.tv-mode {
     font-size:18px;
   ">×</button>
 </div>
-     <script>
-let deferredPrompt;
-const installBox = document.getElementById("installBox");
-const closeBtn = document.getElementById("installClose");
-
-window.addEventListener("beforeinstallprompt", (e) => {
-    e.preventDefault();
-    deferredPrompt = e;
-    installBox.style.display = "block"; // SHOW bar
-});
-
-// When user taps the bar anywhere → show install prompt
-installBox.addEventListener("click", async () => {
-    if (!deferredPrompt) return;
-
-    deferredPrompt.prompt();
-    const choice = await deferredPrompt.userChoice;
-
-    if (choice.outcome === "accepted") {
-        installBox.style.display = "none"; // HIDE after install
-    }
-
-    deferredPrompt = null;
-});
-
-// Close button X just hides the bar
-closeBtn.addEventListener("click", (e) => {
-    e.stopPropagation(); // prevent install popup on close tap
-    installBox.style.display = "none";
-});
-
-// Hide if already installed
-window.addEventListener("appinstalled", () => {
-    installBox.style.display = "none";
-});
-</script>
-     <iframe src="gesture.html" style="width:0;height:0;border:0;overflow:hidden;"></iframe>
+     <!-- Add this where you want the button on your page -->
+<button id="enableVoiceBtn" style="
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  padding: 15px 25px;
+  background: #0EA5E9;
+  color: black;
+  font-size: 18px;
+  font-weight: bold;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  z-index: 9999;
+">Enable Voice Commands</button>
 
 <script>
-window.addEventListener("message", function(e) {
-    if (e.data.type === "gesture") {
-        
-        if (e.data.action === "left") {
-            console.log("Swipe Left");
-            // Yaha tera previous action
-        }
+const btn = document.getElementById('enableVoiceBtn');
 
-        if (e.data.action === "right") {
-            console.log("Swipe Right");
-            // Yaha tera next action
-        }
+const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
-        if (e.data.action === "open") {
-            console.log("Open Hand");
-        }
+if (!SpeechRecognition) {
+    console.log("Your browser does not support voice recognition.");
+} else {
+    const recognition = new SpeechRecognition();
+    recognition.continuous = true;
+    recognition.interimResults = false;
+    recognition.lang = 'en-US';
 
-        if (e.data.action === "fist") {
-            console.log("Fist");
-        }
+    let voiceActive = false;
+    let micAllowed = false;
+    let currentIndex = 0;
 
-        if (e.data.action === "point") {
-            console.log("Point");
-        }
+    function selectCard(index) {
+        const cards = document.querySelectorAll('.recently-item, .card');
+        cards.forEach((c, i) => {
+            c.style.border = (i === index) ? '3px solid #0EA5E9' : 'none';
+            if (i === index) c.scrollIntoView({ behavior: 'smooth', inline: 'center' });
+        });
+        return cards[index];
     }
-});
+
+    const ottMap = {
+        youtube: 'https://www.youtube.com/',
+        netflix: 'https://www.netflix.com/',
+        prime: 'https://www.primevideo.com/',
+        disney: 'https://www.disneyplus.com/',
+        all: '/',
+        hotstar: 'https://www.hotstar.com/',
+        hulu: 'https://www.hulu.com/'
+    };
+
+    recognition.onresult = (event) => {
+        const lastResult = event.results[event.results.length - 1];
+        const command = lastResult[0].transcript.trim().toLowerCase();
+        console.log("Detected command:", command);
+
+        if (!voiceActive) {
+            if (command.includes("89")) {
+                voiceActive = true;
+                console.log("🎤 Voice commands active. You can now give commands.");
+            }
+        } else {
+            if (command.includes("home")) {
+                window.location.href = "/index.html";
+            } 
+            else if (command.includes("swipe left")) {
+                const cards = document.querySelectorAll('.recently-item, .card');
+                currentIndex = Math.max(currentIndex - 1, 0);
+                selectCard(currentIndex);
+            } 
+            else if (command.includes("swipe right")) {
+                const cards = document.querySelectorAll('.recently-item, .card');
+                currentIndex = Math.min(currentIndex + 1, cards.length - 1);
+                selectCard(currentIndex);
+            } 
+            else if (command.includes("swipe up")) {
+                window.scrollBy({ top: -200, behavior: 'smooth' });
+            } 
+            else if (command.includes("swipe down")) {
+                window.scrollBy({ top: 200, behavior: 'smooth' });
+            } 
+            else if (command.includes("open")) {
+                const selected = selectCard(currentIndex);
+                if (selected) selected.click();
+            } 
+            else if (command.includes("deactivate") || command.includes("stop")) {
+                voiceActive = false;
+                console.log("🎤 Voice commands deactivated.");
+            } 
+            else {
+                // Check for OTT apps
+                for (const [name, url] of Object.entries(ottMap)) {
+                    if (command.includes(name)) {
+                        window.open(url, '_blank');
+                        break;
+                    }
+                }
+            }
+        }
+    };
+
+    recognition.onerror = (event) => {
+        console.log("Voice Recognition Error:", event.error);
+    };
+
+    recognition.onend = () => {
+        if (micAllowed) recognition.start(); // auto restart
+    };
+
+    btn.addEventListener('click', async () => {
+        try {
+            await navigator.mediaDevices.getUserMedia({ audio: true });
+            micAllowed = true;
+            console.log('🎤 Microphone allowed. Say "89" to activate voice commands.');
+            recognition.start();
+            btn.style.display = 'none'; // hide button after permission granted
+        } catch (err) {
+            console.log('❌ Microphone permission denied.');
+        }
+    });
+}
 </script>
 </body>
 </html>
