@@ -1785,19 +1785,19 @@ body.tv-mode {
 </style>
 <div id="installBox" style="
   position: fixed;
-  bottom: 39px; 
+  bottom: 70px; 
   left: 0;
   right: 0;
   background: #111;
-  color: #0EA5E9;
-  padding: 13px;
+  color: #b44bff;
+  padding: 14px;
   text-align: center;
   font-size: 16px;
   border-top: 1px solid #333;
   display: none;
   z-index: 9999;
 ">
-<span style="color:#0EA5E9; font-weight:bold;">Install this site as an app</span>
+  <span style="color:#c86bff;">Install this site as an app</span>
 
   <button id="installClose" style="
     position:absolute;
@@ -1809,6 +1809,41 @@ body.tv-mode {
     font-size:18px;
   ">×</button>
 </div>
+<script>
+let deferredPrompt;
+const installBox = document.getElementById("installBox");
+const closeBtn = document.getElementById("installClose");
 
+window.addEventListener("beforeinstallprompt", (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    installBox.style.display = "block"; // SHOW bar
+});
+
+// When user taps the bar anywhere → show install prompt
+installBox.addEventListener("click", async () => {
+    if (!deferredPrompt) return;
+
+    deferredPrompt.prompt();
+    const choice = await deferredPrompt.userChoice;
+
+    if (choice.outcome === "accepted") {
+        installBox.style.display = "none"; // HIDE after install
+    }
+
+    deferredPrompt = null;
+});
+
+// Close button X just hides the bar
+closeBtn.addEventListener("click", (e) => {
+    e.stopPropagation(); // prevent install popup on close tap
+    installBox.style.display = "none";
+});
+
+// Hide if already installed
+window.addEventListener("appinstalled", () => {
+    installBox.style.display = "none";
+});
+</script>
 </body>
 </html>
